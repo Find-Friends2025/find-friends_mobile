@@ -27,7 +27,7 @@ class _DGCheckboxState extends State<DGCheckbox> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.toggle = !widget.toggle;
+        widget.isEnabled ? widget.toggle = !widget.toggle : null;
       },
       onTapDown: (_) => _updateScale(0.95),
       onTapCancel: () => _updateScale(1.0),
@@ -58,10 +58,13 @@ class _DGCheckboxState extends State<DGCheckbox> {
 
 
   void _updateScale(double scale) {
-    setState(() {
-      _scale = scale;
-    });
+    if (widget.isEnabled) {
+      setState(() {
+        _scale = scale;
+      });
+    }
   }
+
 }
 
 enum DGCheckBoxSize { small, medium, large }
