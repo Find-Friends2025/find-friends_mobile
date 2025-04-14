@@ -39,10 +39,11 @@ class _DGCheckboxState extends State<DGCheckbox> {
               borderRadius: BorderRadius.circular(widget.size.getRadius),
               border: Border.all(color: DGColors.label.assistive, width: 2),
             ),
-            child: (toggle) ? DGIcons.check.toImage(
-                width: 20,
-                height: 20,
-                color: DGColors.static.white
+            child: (toggle) ? Padding(
+                padding: EdgeInsets.all(3),
+              child: DGIcons.check.toImage(
+                  color: DGColors.static.white
+              )
             ) : null
         )
       ),
