@@ -11,7 +11,7 @@ class DGColors {
 }
 
 class _DGColorsStatic {
-  const _DGColorsStatic._();
+  _DGColorsStatic._();
 
   static Color get white => const Color(0xffFFFFFF);
   static Color get black => const Color(0xff000000);
@@ -21,7 +21,7 @@ class _DGColorsStatic {
 }
 
 class _DGColorsLabel {
-  const _DGColorsLabel._();
+  _DGColorsLabel._();
 
   static Color get normal => const Color(0xff0C0C0D);
   static Color get strong => const Color(0xff000000);
@@ -33,7 +33,7 @@ class _DGColorsLabel {
 }
 
 class _DGColorsLine {
-  const _DGColorsLine._();
+  _DGColorsLine._();
 
   static Color get normal => const Color(0xffE4E4E5);
   static Color get neutral => const Color(0xffF2F2F3);
@@ -41,7 +41,7 @@ class _DGColorsLine {
 }
 
 class _DGColorsBackground {
-  const _DGColorsBackground._();
+  _DGColorsBackground._();
 
   static Color get normal => const Color(0xffFFFFFF);
   static Color get neutral => const Color(0xffFCFCFD);
