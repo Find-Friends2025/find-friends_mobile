@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class AppTypography {
+abstract class DGTypography {
   static const display1Bold = TextStyle(
     fontFamily: "pretendard",
     fontSize: 36,
