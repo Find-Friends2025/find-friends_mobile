@@ -6,18 +6,21 @@ abstract class DGTypography {
     fontSize: 36,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const display1Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 36,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const display1Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 36,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const display2Bold = TextStyle(
@@ -25,18 +28,21 @@ abstract class DGTypography {
     fontSize: 32,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const display2Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 32,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const display2Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 32,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const title1Bold = TextStyle(
@@ -44,18 +50,21 @@ abstract class DGTypography {
     fontSize: 28,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const title1Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 28,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const title1Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 28,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const title2Bold = TextStyle(
@@ -63,18 +72,21 @@ abstract class DGTypography {
     fontSize: 24,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const title2Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 24,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const title2Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 24,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const headline1Bold = TextStyle(
@@ -82,18 +94,21 @@ abstract class DGTypography {
     fontSize: 20,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const headline1Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 20,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const headline1Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 20,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const headline2Bold = TextStyle(
@@ -101,18 +116,21 @@ abstract class DGTypography {
     fontSize: 18,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const headline2Medium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 18,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const headline2Regular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 18,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const bodyBold = TextStyle(
@@ -120,18 +138,21 @@ abstract class DGTypography {
     fontSize: 16,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const bodyMedium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 16,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const bodyRegular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 16,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const labelBold = TextStyle(
@@ -139,18 +160,21 @@ abstract class DGTypography {
     fontSize: 14,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const labelMedium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 14,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const labelRegular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 14,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 
   static const captionBold = TextStyle(
@@ -158,17 +182,20 @@ abstract class DGTypography {
     fontSize: 12,
     fontWeight: FontWeight.bold,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const captionMedium = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
   static const captionRegular = TextStyle(
     fontFamily: "Pretendard",
     fontSize: 12,
     fontWeight: FontWeight.w400,
     height: 1.3,
+    decoration: TextDecoration.none,
   );
 }
