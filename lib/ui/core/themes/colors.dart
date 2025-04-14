@@ -5,6 +5,9 @@ class DGColors {
 
   static Color get primary => const Color(0xff00C7B1);
   static _DGColorsStatic get static => _DGColorsStatic._();
+  static _DGColorsLabel get label => _DGColorsLabel._();
+  static _DGColorsLine get line => _DGColorsLine._();
+  static _DGColorsBackground get background => _DGColorsBackground._();
 }
 
 class _DGColorsStatic {
