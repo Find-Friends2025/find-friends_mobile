@@ -27,7 +27,7 @@ class _DGColorsLabel {
   Color get strong => const Color(0xff000000);
   Color get neutral => const Color(0xff3B3B40);
   Color get alternative => const Color(0xff5E5E66);
-  Color get assistive => const Color(0xff5E5E66);
+  Color get assistive => const Color(0xff767680);
   Color get disable => const Color(0xffF6F6F7);
 
 }
