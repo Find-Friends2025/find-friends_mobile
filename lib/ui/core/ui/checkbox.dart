@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 
 class DGCheckbox extends StatefulWidget {
   DGCheckBoxSize size;
+  bool isEnabled;
+  bool toggle;
 
-  DGCheckbox({super.key, this.size = DGCheckBoxSize.medium});
+  DGCheckbox({
+    super.key,
+    this.toggle = false,
+    this.size = DGCheckBoxSize.medium,
+    this.isEnabled = true,
+  });
 
   @override
   State<DGCheckbox> createState() => _DGCheckboxState();
@@ -14,14 +21,13 @@ class DGCheckbox extends StatefulWidget {
 
 class _DGCheckboxState extends State<DGCheckbox> {
 
-  bool toggle = false;
   double _scale = 1.0;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        toggle = !toggle;
+        widget.toggle = !widget.toggle;
       },
       onTapDown: (_) => _updateScale(0.95),
       onTapCancel: () => _updateScale(1.0),
@@ -32,14 +38,14 @@ class _DGCheckboxState extends State<DGCheckbox> {
         child: Container(
             width: widget.size.getSize.width,
             height: widget.size.getSize.height,
-            decoration: toggle ? BoxDecoration(
+            decoration: widget.toggle ? BoxDecoration(
                 color: DGColors.primary,
               borderRadius: BorderRadius.circular(widget.size.getRadius),
             ) : BoxDecoration(
               borderRadius: BorderRadius.circular(widget.size.getRadius),
               border: Border.all(color: DGColors.label.assistive, width: 2),
             ),
-            child: (toggle) ? Padding(
+            child: (widget.toggle) ? Padding(
                 padding: EdgeInsets.all(3),
               child: DGIcons.check.toImage(
                   color: DGColors.static.white
