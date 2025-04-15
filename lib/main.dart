@@ -1,3 +1,6 @@
+import 'package:find_friends/ui/core/themes/icons.dart';
+import 'package:find_friends/ui/core/themes/theme.dart';
+import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,8 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
-      theme: ThemeData(), // Theme
-      home: Container() // 홈
+      theme: DGTheme,
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          children: [
+            DGCheckbox()
+          ]
+        )
+      )
     );
   }
 }

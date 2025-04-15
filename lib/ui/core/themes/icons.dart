@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-enum DGIcons { check, phone }
+
+enum DGIcons {
+  check,
+  phone,
+  arrowLeft;
+}
 
 extension DGIconsImage on DGIcons {
   SvgPicture get image => toImage();
