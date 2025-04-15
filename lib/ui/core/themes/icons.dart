@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 enum DGIcons {
-  check;
+  check,
+  arrowLeft;
 }
 
 extension DGIconsImage on DGIcons {
