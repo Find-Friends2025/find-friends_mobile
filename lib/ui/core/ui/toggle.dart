@@ -17,8 +17,6 @@ class DGToggleState extends State<DGToggle> {
   final width = 51.0, height = 31.0;
   final ballSize = 27.0, ballPadding = 2.0;
 
-  // double switchLeft = (51.0 - 25.0) - 2;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,7 +28,8 @@ class DGToggleState extends State<DGToggle> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(99),
           ),
-          color: widget.isChecked ? DGColors.primary : DGColors.line.normal,
+          color:
+              widget.isChecked ? DGColors.primary : DGColors.fill.alternative,
         ),
         child: renderSwitchBall(),
       ),
