@@ -135,3 +135,4 @@ class _DGButtonState extends State<DGButton> {
     ButtonSize.small => 16.0,
   };
 }
+
