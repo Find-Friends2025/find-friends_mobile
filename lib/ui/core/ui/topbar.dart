@@ -1,4 +1,6 @@
+import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
+import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:flutter/material.dart';
 
 class DGTopBar extends StatefulWidget implements PreferredSizeWidget {
@@ -50,7 +52,11 @@ class _DGTopBarState extends State<DGTopBar> {
                 child: AnimatedScale(
                   scale: _scale,
                   duration: const Duration(milliseconds: 100),
-                  child: DGIcons.arrowLeft.image,
+                  child: DGIcons.arrowLeft.toImage(
+                    width: 24,
+                    height: 24,
+                    color: DGColors.static.black
+                  ),
                 ),
               ),
       leadingWidth: widget.leadingWidth,
