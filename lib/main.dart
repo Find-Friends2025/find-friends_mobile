@@ -1,6 +1,8 @@
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/theme.dart';
 import 'package:find_friends/ui/core/ui/checkbox.dart';
+import 'package:find_friends/ui/core/ui/topbar.dart';
+import 'package:find_friends/ui/signin/start_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,14 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: DGTheme,
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            DGCheckbox()
-          ]
-        )
-      )
+      home: Scaffold(body: StartScreen()),
     );
   }
 }
