@@ -1,0 +1,110 @@
+import 'dart:async';
+import 'package:find_friends/ui/core/themes/colors.dart';
+import 'package:find_friends/ui/core/themes/typography.dart';
+import 'package:find_friends/ui/core/ui/clickable.dart';
+import 'package:find_friends/ui/signin/widgets/verify_textfield.dart';
+import 'package:flutter/material.dart';
+
+import '../../../core/ui/button.dart';
+import '../policy_texts.dart';
+
+class VerifyScreen extends StatefulWidget {
+  const VerifyScreen({super.key});
+
+  @override
+  State<VerifyScreen> createState() => _VerifyScreenState();
+}
+
+class _VerifyScreenState extends State<VerifyScreen> {
+  int remainingSeconds = 60;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void startCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (remainingSeconds == 0) {
+        t.cancel();
+      } else {
+        setState(() {
+          remainingSeconds--;
+        });
+      }
+    });
+  }
+
+  void onPinChanged(String value) {
+    print("현재 PIN: $value");
+  }
+
+  // PIN 코드 입력 완료 시 호출
+  void onPinCompleted(String value) {
+    print('최종 PIN: $value');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 140),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: VerifyTextField(
+              onChanged: onPinChanged,
+              onCompleted: onPinCompleted,
+            ),
+          ),
+          this.remainingSeconds != 0
+              ? Text(
+                "${this.remainingSeconds}초 후에 재전송",
+                style: DGTypography.labelRegular.copyWith(
+                  color: DGColors.label.strong,
+                ),
+              )
+              : DGClickable(
+                onPressed: () {
+                  this.timer?.cancel();
+                  setState(() {
+                    this.remainingSeconds = 60;
+                  });
+                  startCountdown();
+                },
+                child: Text(
+                  "재전송 하기",
+                  style: DGTypography.labelRegular.copyWith(
+                    color: DGColors.primary,
+                  ),
+                ),
+              ),
+          Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                PolicyTexts(),
+                SizedBox(height: 20),
+                DGButton(
+                  text: "인증하기",
+                  buttonSize: ButtonSize.large,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 45),
+        ],
+      ),
+    );
+  }
+}
