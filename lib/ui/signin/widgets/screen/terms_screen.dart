@@ -3,7 +3,6 @@ import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/signin/widgets/screen/code_send_screen.dart';
-import 'package:find_friends/ui/signin/widgets/terms_label.dart';
 import 'package:flutter/material.dart';
 
 class TermsScreen extends StatelessWidget {
@@ -93,6 +92,37 @@ class IndividualTermsToggle extends StatelessWidget {
             DGCheckbox(size: DGCheckBoxSize.small),
             TermsLabel(name: name),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class TermsLabel extends StatelessWidget {
+  final String name;
+
+  const TermsLabel({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(width: 10),
+        Text(
+          "(필수) ",
+          style: DGTypography.bodyRegular.copyWith(
+            color: DGColors.label.strong,
+          ),
+        ),
+        Text(
+          this.name,
+          style: DGTypography.bodyRegular.copyWith(color: DGColors.primary),
+        ),
+        Text(
+          "에 동의합니다.",
+          style: DGTypography.bodyRegular.copyWith(
+            color: DGColors.label.strong,
+          ),
         ),
       ],
     );

@@ -31,7 +31,7 @@ class StartScreen extends StatelessWidget {
                 color: DGColors.static.white,
               ),
             ),
-            Expanded(child: Container()),
+            Expanded(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: DGButton(

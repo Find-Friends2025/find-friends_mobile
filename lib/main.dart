@@ -4,6 +4,7 @@ import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/signin/widgets/screen/code_send_screen.dart';
 import 'package:find_friends/ui/signin/widgets/screen/start_screen.dart';
+import 'package:find_friends/ui/signin/widgets/screen/terms_screen.dart';
 import 'package:find_friends/ui/signin/widgets/screen/verify_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: DGTheme,
-      home: Scaffold(body: VerifyScreen()),
+      home: Scaffold(body: TermsScreen()),
     );
   }
 }
