@@ -1,3 +1,4 @@
+import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class DGClickable extends StatefulWidget {
@@ -33,7 +34,17 @@ class _ClickableState extends State<DGClickable> {
         scale: _scale,
         duration: const Duration(milliseconds: 100),
         child: AnimatedContainer(
-          decoration: widget.shapeDecoration,
+          decoration:
+              widget.shapeDecoration ??
+              ShapeDecoration(
+                color:
+                    _isTab
+                        ? DGColors.static.black.withValues(alpha: 0.04)
+                        : Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
           duration: const Duration(milliseconds: 100),
           child: widget.child,
         ),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 enum DGIcons {
   check,
   phone,
-  arrowLeft;
+  arrowLeft,
+  polygon,
+  magnifyingglass,
+  like,
+  chat,
+  person,
 }
 
 extension DGIconsImage on DGIcons {
