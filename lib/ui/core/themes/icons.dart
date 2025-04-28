@@ -13,22 +13,26 @@ enum DGIcons {
   attentionTriangle,
   arrowRight,
   pencil,
+  calendar
 }
 
 extension DGIconsImage on DGIcons {
-  SvgPicture get image => toImage();
+  Container get image => toImage();
 
-  SvgPicture toImage({
+  Container toImage({
     double? width,
     double? height,
     Color color = const Color(0xff000000),
   }) {
-    return SvgPicture.asset(
-      "assets/icons/$name.svg",
-      width: width,
-      height: height,
-      fit: BoxFit.fitHeight,
-      colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+    return Container(
+      alignment: Alignment.center,
+      child: SvgPicture.asset(
+        "assets/icons/${name}.svg",
+        width: width,
+        height: height,
+        fit: BoxFit.fitHeight,
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      ),
     );
   }
 }
