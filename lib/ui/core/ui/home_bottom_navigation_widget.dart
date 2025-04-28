@@ -1,8 +1,12 @@
+import 'package:find_friends/ui/chat/chat_screen.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/shadow.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/clickable.dart';
+import 'package:find_friends/ui/findtie/find_tie_screen.dart';
+import 'package:find_friends/ui/like/like_screen.dart';
+import 'package:find_friends/ui/my/my_screen.dart';
 import 'package:flutter/material.dart';
 
 typedef OnClickCallBack = void Function(DGIcons);
@@ -38,25 +42,26 @@ class HomeBottomNavigationWidget extends StatelessWidget {
               title: "인연 찾기",
               icon: DGIcons.magnifyingglass,
               selected: selectedItem == HomeBottomNavItems.findTie,
-              onClick: onClickNavItem,
+              onClick:
+                  () => onClickNavItem(context, HomeBottomNavItems.findTie),
             ),
             _BottomNavItem(
               title: "내가 받은",
               icon: DGIcons.like,
               selected: selectedItem == HomeBottomNavItems.like,
-              onClick: onClickNavItem,
+              onClick: () => onClickNavItem(context, HomeBottomNavItems.like),
             ),
             _BottomNavItem(
               title: "채팅",
               icon: DGIcons.chat,
               selected: selectedItem == HomeBottomNavItems.chat,
-              onClick: onClickNavItem,
+              onClick: () => onClickNavItem(context, HomeBottomNavItems.chat),
             ),
             _BottomNavItem(
               title: "마이페이지",
               icon: DGIcons.person,
               selected: selectedItem == HomeBottomNavItems.my,
-              onClick: onClickNavItem,
+              onClick: () => onClickNavItem(context, HomeBottomNavItems.my),
             ),
           ],
         ),
@@ -64,7 +69,23 @@ class HomeBottomNavigationWidget extends StatelessWidget {
     );
   }
 
-  void onClickNavItem(DGIcons icon) {}
+  void onClickNavItem(BuildContext context, HomeBottomNavItems item) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        pageBuilder:
+            (context, animation, secondaryAnimation) => switch (item) {
+              HomeBottomNavItems.findTie => const FindTieScreen(),
+              HomeBottomNavItems.like => const LikeScreen(),
+              HomeBottomNavItems.chat => const ChatScreen(),
+              HomeBottomNavItems.my => const MyScreen(),
+            },
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+      ),
+      (route) => false,
+    );
+  }
 }
 
 class _BottomNavItem extends StatelessWidget {
@@ -79,14 +100,14 @@ class _BottomNavItem extends StatelessWidget {
   final String title;
   final DGIcons icon;
   final bool selected;
-  final OnClickCallBack onClick;
+  final Function() onClick;
 
   @override
   Widget build(BuildContext context) {
     final disabledColor = DGColors.label.assistive.withValues(alpha: 0.4);
     return Expanded(
       child: DGClickable(
-        onPressed: () => onClick.call(icon),
+        onPressed: onClick,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
