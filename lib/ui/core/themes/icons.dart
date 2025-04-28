@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 enum DGIcons {
   check,
   phone,
-  arrowLeft;
+  arrowLeft,
+  polygon,
+  magnifyingglass,
+  like,
+  chat,
+  person,
+  attentionTriangle,
+  arrowRight,
+  pencil,
 }
 
 extension DGIconsImage on DGIcons {
@@ -17,7 +24,7 @@ extension DGIconsImage on DGIcons {
     Color color = const Color(0xff000000),
   }) {
     return SvgPicture.asset(
-      "assets/icons/${name}.svg",
+      "assets/icons/$name.svg",
       width: width,
       height: height,
       fit: BoxFit.fitHeight,
