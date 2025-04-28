@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,11 +8,13 @@ import 'package:flutter/material.dart';
 class DGCheckbox extends StatefulWidget {
   DGCheckBoxSize size;
   bool isEnabled;
-  bool toggle;
+  bool isToggled;
+  ValueChanged<bool> onTap;
 
   DGCheckbox({
     super.key,
-    this.toggle = false,
+    required this.onTap,
+    required this.isToggled,
     this.size = DGCheckBoxSize.medium,
     this.isEnabled = true,
   });
@@ -20,42 +24,47 @@ class DGCheckbox extends StatefulWidget {
 }
 
 class _DGCheckboxState extends State<DGCheckbox> {
-
   double _scale = 1.0;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.isEnabled ? widget.toggle = !widget.toggle : null;
+        widget.onTap(!widget.isToggled);
       },
       onTapDown: (_) => _updateScale(0.95),
       onTapCancel: () => _updateScale(1.0),
       onTapUp: (_) => _updateScale(1.0),
       child: AnimatedScale(
-          scale: _scale,
+        scale: _scale,
         duration: const Duration(milliseconds: 100),
         child: Container(
-            width: widget.size.getSize.width,
-            height: widget.size.getSize.height,
-            decoration: widget.toggle ? BoxDecoration(
-                color: DGColors.primary,
-              borderRadius: BorderRadius.circular(widget.size.getRadius),
-            ) : BoxDecoration(
-              borderRadius: BorderRadius.circular(widget.size.getRadius),
-              border: Border.all(color: DGColors.label.assistive, width: 2),
-            ),
-            child: (widget.toggle) ? Padding(
-                padding: EdgeInsets.all(3),
-              child: DGIcons.check.toImage(
-                  color: DGColors.static.white
-              )
-            ) : null
-        )
+          width: widget.size.getSize.width,
+          height: widget.size.getSize.height,
+          decoration:
+              widget.isToggled
+                  ? BoxDecoration(
+                    color: DGColors.primary,
+                    borderRadius: BorderRadius.circular(widget.size.getRadius),
+                  )
+                  : BoxDecoration(
+                    borderRadius: BorderRadius.circular(widget.size.getRadius),
+                    border: Border.all(
+                      color: DGColors.label.assistive,
+                      width: 2,
+                    ),
+                  ),
+          child:
+              (widget.isToggled)
+                  ? Padding(
+                    padding: EdgeInsets.all(3),
+                    child: DGIcons.check.toImage(color: DGColors.static.white),
+                  )
+                  : null,
+        ),
       ),
     );
   }
-
 
   void _updateScale(double scale) {
     if (widget.isEnabled) {
@@ -64,7 +73,6 @@ class _DGCheckboxState extends State<DGCheckbox> {
       });
     }
   }
-
 }
 
 enum DGCheckBoxSize { small, medium, large }
