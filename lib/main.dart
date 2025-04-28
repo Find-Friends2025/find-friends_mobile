@@ -1,5 +1,5 @@
 import 'package:find_friends/ui/core/themes/theme.dart';
-import 'package:find_friends/ui/findtie/find_tie_screen.dart';
+import 'package:find_friends/ui/my/my_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: DGTheme,
-      home: FindTieScreen(),
+      home: MyScreen(),
     );
   }
 }
