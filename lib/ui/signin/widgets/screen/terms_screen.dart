@@ -5,8 +5,30 @@ import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/signin/widgets/screen/code_send_screen.dart';
 import 'package:flutter/material.dart';
 
-class TermsScreen extends StatelessWidget {
+class TermsScreen extends StatefulWidget {
   const TermsScreen({super.key});
+
+  @override
+  State<TermsScreen> createState() => _TermsScreenState();
+}
+
+class _TermsScreenState extends State<TermsScreen> {
+  bool isAllChecked = false;
+  List<bool> isCheckedList = [false, false, false];
+
+  void toggleAll(bool value) {
+    setState(() {
+      isAllChecked = value;
+      isCheckedList = List<bool>.filled(isCheckedList.length, value);
+    });
+  }
+
+  void toggleIndividual(int index, bool value) {
+    setState(() {
+      isCheckedList[index] = value;
+      isAllChecked = isCheckedList.every((checked) => checked);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +50,48 @@ class TermsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 25),
-                  AcceptAllToggle(),
-                  IndividualTermsToggle(name: "개인정보 수집 및 이용"),
-                  IndividualTermsToggle(name: "이용약관"),
-                  IndividualTermsToggle(name: "개인정보 제 3자 제공"),
+                  Row(
+                    children: [
+                      DGCheckbox(
+                        onTap: (bool) {
+                          toggleAll(bool);
+                        },
+                        size: DGCheckBoxSize.small,
+                        isEnabled: true,
+                        isToggled: isAllChecked,
+                      ),
+
+                      SizedBox(width: 10),
+                      Text(
+                        "전체동의",
+                        style: DGTypography.headline2Medium.copyWith(
+                          color: DGColors.label.strong,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // 개별 항목들
+                  IndividualTermsToggle(
+                    name: "개인정보 수집 및 이용",
+                    toggle: isCheckedList[0],
+                    onTap: (bool) {
+                      toggleIndividual(0, bool);
+                    },
+                  ),
+                  IndividualTermsToggle(
+                    name: "이용약관",
+                    toggle: isCheckedList[1],
+                    onTap: (bool) {
+                      toggleIndividual(1, bool);
+                    },
+                  ),
+                  IndividualTermsToggle(
+                    name: "개인정보 제 3자 제공",
+                    toggle: isCheckedList[2],
+                    onTap: (bool) {
+                      toggleIndividual(2, bool);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -47,6 +107,7 @@ class TermsScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => CodeSendScreen()),
                   );
                 },
+                isEnabled: isAllChecked,
               ),
             ),
           ],
@@ -56,30 +117,17 @@ class TermsScreen extends StatelessWidget {
   }
 }
 
-class AcceptAllToggle extends StatelessWidget {
-  const AcceptAllToggle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        DGCheckbox(size: DGCheckBoxSize.small),
-        SizedBox(width: 10),
-        Text(
-          "전체동의",
-          style: DGTypography.headline2Medium.copyWith(
-            color: DGColors.label.strong,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class IndividualTermsToggle extends StatelessWidget {
   final String name;
+  final bool toggle;
+  final ValueChanged<bool> onTap;
 
-  const IndividualTermsToggle({super.key, required this.name});
+  const IndividualTermsToggle({
+    super.key,
+    required this.name,
+    required this.toggle,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +137,13 @@ class IndividualTermsToggle extends StatelessWidget {
         Row(
           children: [
             SizedBox(width: 28),
-            DGCheckbox(size: DGCheckBoxSize.small),
+            DGCheckbox(
+              onTap: onTap,
+              size: DGCheckBoxSize.small,
+              isEnabled: true,
+              isToggled: toggle,
+            ),
+
             TermsLabel(name: name),
           ],
         ),
