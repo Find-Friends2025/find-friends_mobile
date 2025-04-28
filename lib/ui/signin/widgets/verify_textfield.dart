@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerifyTextField extends StatelessWidget {
+  final TextEditingController controller;
   final int length;
   final ValueChanged<String> onChanged;
   final ValueChanged<String> onCompleted;
 
   const VerifyTextField({
     super.key,
+    required this.controller,
     this.length = 6,
     required this.onChanged,
     required this.onCompleted,
@@ -19,6 +21,7 @@ class VerifyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return PinCodeTextField(
       appContext: context,
+      controller: controller,
       length: length,
       obscureText: false,
       animationType: AnimationType.none,

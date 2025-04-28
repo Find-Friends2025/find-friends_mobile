@@ -4,15 +4,39 @@ import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/textfield.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
+import 'package:find_friends/ui/signin/widgets/screen/verify_screen.dart';
 import 'package:flutter/material.dart';
 
-class CodeSendScreen extends StatelessWidget {
+class CodeSendScreen extends StatefulWidget {
   const CodeSendScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
+  State<CodeSendScreen> createState() => _CodeSendScreenState();
+}
 
+class _CodeSendScreenState extends State<CodeSendScreen> {
+  TextEditingController controller = TextEditingController();
+
+  bool isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        isButtonEnabled = controller.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DGColors.background.normal,
       appBar: DGTopBar(
@@ -50,7 +74,15 @@ class CodeSendScreen extends StatelessWidget {
                     DGButton(
                       text: "인증번호 전송",
                       buttonSize: ButtonSize.large,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerifyScreen(),
+                          ),
+                        );
+                      },
+                      isEnabled: isButtonEnabled,
                     ),
                   ],
                 ),
