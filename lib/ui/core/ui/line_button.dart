@@ -13,6 +13,7 @@ class DGLineButton extends StatefulWidget {
     required this.onPressed,
     this.isEnabled = true,
     this.rounded = false,
+    this.expand = false,
     this.leadingIcon,
     this.trailingIcon,
   });
@@ -22,6 +23,7 @@ class DGLineButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isEnabled;
   final bool rounded;
+  final bool expand;
   final DGIcons? leadingIcon;
   final DGIcons? trailingIcon;
 
@@ -42,49 +44,76 @@ class _DGLineButtonState extends State<DGLineButton> {
       child: AnimatedScale(
         scale: _scale,
         duration: const Duration(milliseconds: 100),
-        child: SizedBox(
-          height: _getHeight(),
-          child: Container(
-            alignment: Alignment.center,
-            padding: _getPadding(),
-            decoration: BoxDecoration(
-              color: DGColors.static.white,
-              borderRadius: _getRadius(),
-              border: Border.all(
-                color:
-                    widget.isEnabled
-                        ? DGColors.primary
-                        : DGColors.primary.withValues(alpha: 0.4),
-                width: _getStrokeWidth(),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                if (widget.leadingIcon != null)
-                  widget.leadingIcon!.toImage(
-                    width: _getIconSize(),
-                    height: _getIconSize(),
-                    color: DGColors.static.black,
+        child:
+            widget.expand
+                ? Container(
+                  width: double.infinity,
+                  height: _getHeight(),
+                  alignment: Alignment.center,
+                  padding: _getPadding(),
+                  decoration: _getDecoration(),
+                  child: _buildContent(),
+                )
+                : Align(
+                  // wrap할 때
+                  alignment: Alignment.center,
+                  child: IntrinsicWidth(
+                    child: Container(
+                      height: _getHeight(),
+                      alignment: Alignment.center,
+                      padding: _getPadding(),
+                      decoration: _getDecoration(),
+                      child: _buildContent(),
+                    ),
                   ),
-                if (widget.trailingIcon != null)
-                  SizedBox(width: _getIconSize()),
-                Text(
-                  widget.text,
-                  style: _getTextStyle().copyWith(color: DGColors.static.black),
                 ),
-                if (widget.leadingIcon != null) SizedBox(width: _getIconSize()),
-                if (widget.trailingIcon != null)
-                  widget.trailingIcon!.toImage(
-                    width: _getIconSize(),
-                    height: _getIconSize(),
-                    color: DGColors.static.black,
-                  ),
-              ],
-            ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize:
+          (widget.expand &&
+                  (widget.trailingIcon != null || widget.leadingIcon != null))
+              ? MainAxisSize.max
+              : MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (widget.leadingIcon != null)
+          widget.leadingIcon!.toImage(
+            width: _getIconSize(),
+            height: _getIconSize(),
+            color: DGColors.static.black,
           ),
+        if (widget.trailingIcon != null) SizedBox(width: _getIconSize()),
+        Text(
+          widget.text,
+          style: _getTextStyle().copyWith(color: DGColors.static.black),
+          textAlign: TextAlign.center,
         ),
+        if (widget.leadingIcon != null) SizedBox(width: _getIconSize()),
+        if (widget.trailingIcon != null)
+          widget.trailingIcon!.toImage(
+            width: _getIconSize(),
+            height: _getIconSize(),
+            color: DGColors.static.black,
+          ),
+      ],
+    );
+  }
+
+  BoxDecoration _getDecoration() {
+    return BoxDecoration(
+      color: DGColors.static.white,
+      borderRadius: _getRadius(),
+      border: Border.all(
+        color:
+            widget.isEnabled
+                ? DGColors.primary
+                : DGColors.primary.withValues(alpha: 0.4),
+        width: _getStrokeWidth(),
       ),
     );
   }

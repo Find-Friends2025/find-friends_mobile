@@ -13,6 +13,7 @@ class DGButton extends StatefulWidget {
     required this.onPressed,
     this.isEnabled = true,
     this.rounded = false,
+    this.expand = false,
     this.leadingIcon,
     this.trailingIcon,
   });
@@ -22,6 +23,7 @@ class DGButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isEnabled;
   final bool rounded;
+  final bool expand;
   final DGIcons? leadingIcon;
   final DGIcons? trailingIcon;
 
@@ -42,46 +44,71 @@ class _DGButtonState extends State<DGButton> {
       child: AnimatedScale(
         scale: _scale,
         duration: const Duration(milliseconds: 100),
-        child: SizedBox(
-          height: _getHeight(),
-          child: Container(
-            alignment: Alignment.center,
-            padding: _getPadding(),
-            decoration: BoxDecoration(
-              color:
-                  widget.isEnabled
-                      ? DGColors.primary
-                      : DGColors.primary.withValues(alpha: 0.4),
-              borderRadius: _getRadius(),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                if (widget.leadingIcon != null)
-                  widget.leadingIcon!.toImage(
-                    width: _getIconSize(),
-                    height: _getIconSize(),
-                    color: DGColors.static.white,
+        child:
+            widget.expand
+                ? Container(
+                  width: double.infinity,
+                  height: _getHeight(),
+                  alignment: Alignment.center,
+                  padding: _getPadding(),
+                  decoration: _getDecoration(),
+                  child: _buildContent(),
+                )
+                : Align(
+                  // wrap할 때
+                  alignment: Alignment.center,
+                  child: IntrinsicWidth(
+                    child: Container(
+                      height: _getHeight(),
+                      alignment: Alignment.center,
+                      padding: _getPadding(),
+                      decoration: _getDecoration(),
+                      child: _buildContent(),
+                    ),
                   ),
-                if (widget.trailingIcon != null)
-                  SizedBox(width: _getIconSize()),
-                Text(
-                  widget.text,
-                  style: _getTextStyle().copyWith(color: DGColors.static.white),
                 ),
-                if (widget.leadingIcon != null) SizedBox(width: _getIconSize()),
-                if (widget.trailingIcon != null)
-                  widget.trailingIcon!.toImage(
-                    width: _getIconSize(),
-                    height: _getIconSize(),
-                    color: DGColors.static.white,
-                  ),
-              ],
-            ),
-          ),
-        ),
       ),
+    );
+  }
+
+  BoxDecoration _getDecoration() {
+    return BoxDecoration(
+      color:
+          widget.isEnabled
+              ? DGColors.primary
+              : DGColors.primary.withValues(alpha: 0.4),
+      borderRadius: _getRadius(),
+    );
+  }
+
+  Widget _buildContent() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize:
+          (widget.expand &&
+                  (widget.trailingIcon != null || widget.leadingIcon != null))
+              ? MainAxisSize.max
+              : MainAxisSize.min,
+      children: [
+        if (widget.leadingIcon != null)
+          widget.leadingIcon!.toImage(
+            width: _getIconSize(),
+            height: _getIconSize(),
+            color: DGColors.static.white,
+          ),
+        if (widget.trailingIcon != null) SizedBox(width: _getIconSize()),
+        Text(
+          widget.text,
+          style: _getTextStyle().copyWith(color: DGColors.static.white),
+        ),
+        if (widget.leadingIcon != null) SizedBox(width: _getIconSize()),
+        if (widget.trailingIcon != null)
+          widget.trailingIcon!.toImage(
+            width: _getIconSize(),
+            height: _getIconSize(),
+            color: DGColors.static.white,
+          ),
+      ],
     );
   }
 
@@ -135,4 +162,3 @@ class _DGButtonState extends State<DGButton> {
     ButtonSize.small => 16.0,
   };
 }
-
