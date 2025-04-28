@@ -23,6 +23,9 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
   void initState() {
     super.initState();
     controller.addListener(() {
+      if (isButtonEnabled == controller.text.isNotEmpty) {
+        return;
+      }
       setState(() {
         isButtonEnabled = controller.text.isNotEmpty;
       });
