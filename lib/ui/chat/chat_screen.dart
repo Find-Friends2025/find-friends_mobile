@@ -1,0 +1,32 @@
+import 'package:find_friends/ui/core/themes/typography.dart';
+import 'package:find_friends/ui/core/ui/home_bottom_navigation_widget.dart';
+import 'package:find_friends/ui/core/ui/home_top_bar_widget.dart';
+import 'package:flutter/material.dart';
+
+class ChatScreen extends StatelessWidget {
+  const ChatScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: HomeTopBarWidget(title: "채팅", actions: []),
+      bottomNavigationBar: HomeBottomNavigationWidget(
+        selectedItem: HomeBottomNavItems.chat,
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(
+              "해당 회원을 찾지 못하였습니다.",
+              style: DGTypography.headline2Regular,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
