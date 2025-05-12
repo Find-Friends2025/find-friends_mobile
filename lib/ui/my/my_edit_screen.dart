@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_friends/domain/enums/sheet_type.dart';
+import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/ui/home_top_bar_widget.dart';
 import 'package:find_friends/ui/core/ui/line_button.dart';
+import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/my/widgets/my_edit_card.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +14,7 @@ class MyEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeTopBarWidget(title: "프로필 수정", actions: []),
+      appBar: DGTopBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Center(
@@ -37,11 +40,19 @@ class MyEditScreen extends StatelessWidget {
                   expand: true,
                 ),
               ),
-              MyEditCard(name: "자기소개", onPressed: () {}, content: ''),
-              MyEditCard(name: "닉네임", onPressed: () {}, content: '말랑탱이'),
-              MyEditCard(name: "성별", onPressed: () {}, content: '남자'),
-              MyEditCard(name: "생년월일", onPressed: () {}, content: '2007-08-09'),
-              MyEditCard(name: "거주지", onPressed: () {}, content: '대구광역시'),
+              MyEditCard(name: "자기소개", content: "", type: SheetType.text),
+              MyEditCard(name: "닉네임", content: "말랑탱이", type: SheetType.text),
+              MyEditCard(name: "성별", content: "남자", type: SheetType.radio),
+              MyEditCard(
+                name: "생년월일",
+                content: "2007-08-07",
+                type: SheetType.date,
+              ),
+              MyEditCard(
+                name: "거주지",
+                content: "부산광역시",
+                type: SheetType.residence,
+              ),
             ],
           ),
         ),
