@@ -11,11 +11,11 @@ class NoticeBoardScreen extends StatelessWidget {
     return Scaffold(
       appBar: DGTopBar(title: Text("공지사항", style: DGTypography.title2Bold)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 15,
+            spacing: 8,
             children: [
               SizedBox(height: 10),
               ...List.generate(

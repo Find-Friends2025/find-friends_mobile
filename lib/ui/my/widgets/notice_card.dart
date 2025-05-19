@@ -11,7 +11,7 @@ class NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: DGColors.line.neutral),
@@ -23,7 +23,7 @@ class NoticeCard extends StatelessWidget {
             title,
             style: DGTypography.headline1Bold.copyWith(color: Colors.black),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 8),
           Text(
             content,
             style: DGTypography.captionRegular.copyWith(color: Colors.black),
