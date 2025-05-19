@@ -11,9 +11,7 @@ class SignupNickScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DGTopBar(
-        backgroundColor: DGColors.background.normal,
-      ),
+      appBar: DGTopBar(backgroundColor: DGColors.background.normal),
       body: Padding(
         padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
         child: Column(
@@ -23,9 +21,9 @@ class SignupNickScreen extends StatelessWidget {
           children: [
             Text("닉네임을 정해주세요", style: DGTypography.title2Bold),
             DGTextField(
-              icon: DGIcons.,
-                controller: TextEditingController(),
-                hintText: "닉네임을 입력해주세요."
+              icon: DGIcons.person,
+              controller: TextEditingController(),
+              hintText: "닉네임을 입력해주세요.",
             ),
             Spacer(),
             DGButton(

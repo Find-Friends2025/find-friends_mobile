@@ -26,21 +26,24 @@ class SignupGenderScreen extends StatelessWidget {
               child: Column(
                 spacing: 24,
                 children: [
-                  for(var gender in Gender.values)
+                  for (var gender in Gender.values)
                     Row(
                       spacing: 20,
                       children: [
-                        DGCheckbox(),
-                        Text(gender.name, style: DGTypography.headline1Bold,)
+                        DGCheckbox(onTap: (bool value) {}, isToggled: false),
+                        Text(gender.name, style: DGTypography.headline1Bold),
                       ],
                     ),
                 ],
               ),
             ),
             Spacer(),
-            DGButton(text: "다음", buttonSize: ButtonSize.large, expand: true, onPressed: () {
-
-            })
+            DGButton(
+              text: "다음",
+              buttonSize: ButtonSize.large,
+              expand: true,
+              onPressed: () {},
+            ),
           ],
         ),
       ),
