@@ -6,9 +6,10 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../domain/enums/gender.dart';
 import '../../../domain/enums/residence.dart';
-import '../../../domain/enums/sheet_type.dart';
 import '../../core/themes/typography.dart';
 import '../../core/ui/checkbox.dart';
+
+enum SheetType { text, date, radio, residence }
 
 class MyBottomSheet extends StatefulWidget {
   final TextEditingController? controller;

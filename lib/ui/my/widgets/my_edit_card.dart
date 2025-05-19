@@ -3,7 +3,6 @@ import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/my/widgets/my_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import '../../../domain/enums/sheet_type.dart';
 
 class MyEditCard extends StatelessWidget {
   final String name;
@@ -20,9 +19,9 @@ class MyEditCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
-        spacing: 0,
+        spacing: 5,
         children: [
           DGClickable(
             onPressed: () {

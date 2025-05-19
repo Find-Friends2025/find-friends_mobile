@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:find_friends/domain/enums/sheet_type.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/ui/home_top_bar_widget.dart';
 import 'package:find_friends/ui/core/ui/line_button.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
+import 'package:find_friends/ui/my/widgets/my_bottom_sheet.dart';
 import 'package:find_friends/ui/my/widgets/my_edit_card.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class MyEditScreen extends StatelessWidget {
     return Scaffold(
       appBar: DGTopBar(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: Column(
             spacing: 8,
