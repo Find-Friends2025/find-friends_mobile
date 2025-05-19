@@ -43,7 +43,7 @@ class _DGTopBarState extends State<DGTopBar> {
               ? widget.leading!
               : GestureDetector(
                 onTap: () {
-                  // 뒤로
+                  Navigator.of(context).pop();
                 },
                 onTapDown: (_) => _updateScale(0.95),
                 onTapCancel: () => _updateScale(1.0),

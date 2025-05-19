@@ -15,7 +15,7 @@ enum DGIcons {
   pencil,
   plus,
   sendFill,
-  calendar
+  calendar,
 }
 
 extension DGIconsImage on DGIcons {
