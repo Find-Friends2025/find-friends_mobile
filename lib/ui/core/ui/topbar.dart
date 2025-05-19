@@ -1,6 +1,5 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
-import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:flutter/material.dart';
 
 class DGTopBar extends StatefulWidget implements PreferredSizeWidget {
@@ -44,7 +43,7 @@ class _DGTopBarState extends State<DGTopBar> {
               ? widget.leading!
               : GestureDetector(
                 onTap: () {
-                  // 뒤로
+                  Navigator.of(context).pop();
                 },
                 onTapDown: (_) => _updateScale(0.95),
                 onTapCancel: () => _updateScale(1.0),

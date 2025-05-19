@@ -13,7 +13,9 @@ enum DGIcons {
   attentionTriangle,
   arrowRight,
   pencil,
-  calendar
+  plus,
+  sendFill,
+  calendar,
 }
 
 extension DGIconsImage on DGIcons {
