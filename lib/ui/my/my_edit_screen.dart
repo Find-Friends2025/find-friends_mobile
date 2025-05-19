@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
+import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/home_top_bar_widget.dart';
 import 'package:find_friends/ui/core/ui/line_button.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
@@ -14,7 +15,7 @@ class MyEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DGTopBar(),
+      appBar: DGTopBar(title: Text("프로필 관리", style: DGTypography.title2Bold)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
