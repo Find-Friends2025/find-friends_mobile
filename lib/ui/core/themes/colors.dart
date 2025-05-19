@@ -4,6 +4,7 @@ class DGColors {
   const DGColors._();
 
   static Color get primary => const Color(0xff00C7B1);
+  static Color get secondary => const Color(0xFF78A9FF);
   static _DGColorsStatic get static => _DGColorsStatic._();
   static _DGColorsLabel get label => _DGColorsLabel._();
   static _DGColorsLine get line => _DGColorsLine._();

@@ -1,6 +1,5 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
-import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:flutter/material.dart';
 
 class DGTopBar extends StatefulWidget implements PreferredSizeWidget {

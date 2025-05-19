@@ -1,4 +1,5 @@
 import 'package:find_friends/ui/core/themes/icons.dart';
+import 'package:find_friends/ui/chatdetail/chat_detail_screen.dart';
 import 'package:find_friends/ui/core/themes/theme.dart';
 import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';

@@ -13,6 +13,8 @@ enum DGIcons {
   attentionTriangle,
   arrowRight,
   pencil,
+  plus,
+  sendFill,
   calendar
 }
 
