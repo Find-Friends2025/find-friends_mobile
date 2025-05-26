@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignupGenderScreen extends StatefulWidget {
+  const SignupGenderScreen({super.key});
+
   @override
   State<SignupGenderScreen> createState() => _SignupGenderScreenState();
 }

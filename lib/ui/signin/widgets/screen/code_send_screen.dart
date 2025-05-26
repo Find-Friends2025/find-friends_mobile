@@ -86,6 +86,7 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
                         );
                       },
                       isEnabled: isButtonEnabled,
+                      expand: true,
                     ),
                   ],
                 ),
