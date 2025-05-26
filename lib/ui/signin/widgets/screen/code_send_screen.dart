@@ -61,6 +61,7 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
                 hintText: "전화번호를 입력해주세요.",
                 icon: DGIcons.phone,
                 iconColor: DGColors.primary,
+                fieldType: TextInputType.number,
               ),
               Expanded(child: SizedBox()),
               Padding(

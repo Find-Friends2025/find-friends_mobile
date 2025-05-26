@@ -1,12 +1,13 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:flutter/material.dart';
-import '../themes/icons.dart';
+import 'package:find_friends/ui/core/themes/icons.dart';
 
 class DGTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final DGIcons? icon;
   final Color? iconColor;
+  final TextInputType fieldType;
 
   const DGTextField({
     super.key,
@@ -14,6 +15,7 @@ class DGTextField extends StatefulWidget {
     required this.hintText,
     this.icon,
     this.iconColor,
+    this.fieldType = TextInputType.text,
   });
 
   @override
@@ -60,6 +62,7 @@ class _DGTextFieldState extends State<DGTextField> {
             ],
             Expanded(
               child: TextField(
+                keyboardType: widget.fieldType,
                 controller: widget.controller,
                 focusNode: focusNode,
                 decoration: InputDecoration(
