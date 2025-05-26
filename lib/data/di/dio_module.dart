@@ -15,7 +15,10 @@ abstract class DioModule {
       )
     );
 
-    dio.interceptors.add(authInterceptor);
+    dio.interceptors.addAll([
+      authInterceptor,
+      LogInterceptor(requestBody: true)
+    ]);
 
     return dio;
   }
