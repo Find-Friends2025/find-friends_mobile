@@ -63,7 +63,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DGTopBar(),
+      appBar: DGTopBar(
+        title: Text(
+          "인증코드",
+          style: DGTypography.headline2Bold.copyWith(
+            color: DGColors.label.strong,
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           children: [
@@ -115,6 +122,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     buttonSize: ButtonSize.large,
                     onPressed: () {},
                     isEnabled: isButtonEnabled,
+                    expand: true,
                   ),
                 ],
               ),
