@@ -1,15 +1,4 @@
 import 'package:find_friends/routing/routes.dart';
-import 'package:find_friends/ui/findtie/find_tie_screen.dart';
-import 'package:find_friends/ui/profilepicture/profile_picture_screen.dart';
-import 'package:find_friends/ui/signin/widgets/screen/code_send_screen.dart';
-import 'package:find_friends/ui/signin/widgets/screen/start_screen.dart';
-import 'package:find_friends/ui/signin/widgets/screen/terms_screen.dart';
-import 'package:find_friends/ui/signin/widgets/screen/verify_screen.dart';
-import 'package:find_friends/ui/signup/widgets/screen/signup_birth_screen.dart';
-import 'package:find_friends/ui/signup/widgets/screen/signup_gender_screen.dart';
-import 'package:find_friends/ui/signup/widgets/screen/signup_meet_screen.dart';
-import 'package:find_friends/ui/signup/widgets/screen/signup_nick_screen.dart';
-import 'package:find_friends/ui/signup/widgets/screen/signup_residence_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
