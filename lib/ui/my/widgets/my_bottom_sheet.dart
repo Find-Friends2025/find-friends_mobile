@@ -14,7 +14,6 @@ enum SheetType { text, date, radio, residence }
 class MyBottomSheet extends StatefulWidget {
   final TextEditingController? controller;
   final SheetType type;
-
   const MyBottomSheet({super.key, this.controller, required this.type});
 
   @override
@@ -26,6 +25,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
   Widget build(BuildContext context) {
     DateTime _focusedDay = DateTime.now();
     DateTime? _selectedDay;
+    Gender? _selectedGender;
 
     return Container(
       color: Colors.white,
@@ -57,7 +57,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                       },
                       calendarStyle: CalendarStyle(
                         todayDecoration: BoxDecoration(
-                          color: DGColors.primary.withOpacity(0.5), // 오늘 날짜 배경색
+                          color: DGColors.primary.withOpacity(0.5),
                           shape: BoxShape.circle,
                         ),
                         selectedDecoration: BoxDecoration(
@@ -69,7 +69,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                           color: DGColors.static.negative,
                         ),
                         outsideTextStyle: TextStyle(
-                          color: DGColors.label.assistive, // 현재 달이 아닌 날짜 글자색
+                          color: DGColors.label.assistive,
                         ),
                       ),
                     );
@@ -80,18 +80,25 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                         spacing: 24,
                         children: [
                           for (var gender in Gender.values)
-                            Row(
-                              spacing: 20,
-                              children: [
-                                DGCheckbox(
-                                  onTap: (bool value) {},
-                                  isToggled: false,
-                                ),
-                                Text(
-                                  gender.name,
-                                  style: DGTypography.headline1Bold,
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 24),
+                              child: Row(
+                                children: [
+                                  DGCheckbox(
+                                    isToggled: _selectedGender == gender,
+                                    onTap: (bool _) {
+                                      setState(() {
+                                        _selectedGender = gender;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text(
+                                    gender.alias,
+                                    style: DGTypography.headline1Bold,
+                                  ),
+                                ],
+                              ),
                             ),
                         ],
                       ),
