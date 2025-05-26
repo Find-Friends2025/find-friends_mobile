@@ -16,6 +16,7 @@ enum DGIcons {
   plus,
   sendFill,
   calendar,
+  meatball,
 }
 
 extension DGIconsImage on DGIcons {
