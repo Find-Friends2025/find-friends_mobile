@@ -8,6 +8,7 @@ class DGTopBar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Widget? title;
   final Color? backgroundColor;
+  final Color? iconColor;
 
   const DGTopBar({
     super.key,
@@ -16,6 +17,7 @@ class DGTopBar extends StatefulWidget implements PreferredSizeWidget {
     this.leading,
     this.leadingWidth,
     this.actions,
+    this.iconColor,
   });
 
   @override
@@ -54,7 +56,7 @@ class _DGTopBarState extends State<DGTopBar> {
                   child: DGIcons.arrowLeft.toImage(
                     width: 24,
                     height: 24,
-                    color: DGColors.static.black,
+                    color: widget.iconColor ?? DGColors.static.black,
                   ),
                 ),
               ),
