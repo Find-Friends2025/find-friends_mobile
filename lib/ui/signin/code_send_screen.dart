@@ -4,7 +4,7 @@ import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/textfield.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
-import 'package:find_friends/ui/signin/widgets/screen/verify_screen.dart';
+import 'package:find_friends/ui/signin/verify_screen.dart';
 import 'package:flutter/material.dart';
 
 class CodeSendScreen extends StatefulWidget {

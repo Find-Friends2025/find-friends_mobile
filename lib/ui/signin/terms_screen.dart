@@ -3,7 +3,7 @@ import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
-import 'package:find_friends/ui/signin/widgets/screen/code_send_screen.dart';
+import 'package:find_friends/ui/signin/code_send_screen.dart';
 import 'package:flutter/material.dart';
 
 class TermsScreen extends StatefulWidget {

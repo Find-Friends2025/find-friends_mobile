@@ -6,7 +6,7 @@ import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/signin/widgets/verify_textfield.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/ui/button.dart';
+import '../core/ui/button.dart';
 
 class VerifyScreen extends StatefulWidget {
   const VerifyScreen({super.key});

@@ -2,7 +2,7 @@ import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
-import 'package:find_friends/ui/signin/widgets/screen/terms_screen.dart';
+import 'package:find_friends/ui/signin/terms_screen.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
