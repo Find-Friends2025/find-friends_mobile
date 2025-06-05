@@ -14,14 +14,14 @@ class FirebaseRepositoryImpl extends FirebaseRepository {
           print(verificationId);
         },
         verificationFailed: (FirebaseAuthException e) {
-          print("verificationFailed: $e");
+          throw e;
         },
         codeSent: (String verificationId, int? resendToken) {
           verificationId = verificationId;
           print("codeSent: $resendToken");
         },
         codeAutoRetrievalTimeout: (_) {
-
+          throw Exception("Timeout");
         }
 
     );
@@ -39,7 +39,7 @@ class FirebaseRepositoryImpl extends FirebaseRepository {
         .then((value) {
           return value.credential?.accessToken;
         }).catchError((error) {
-          print(error);
+          throw error;
         });
 
 

@@ -9,7 +9,7 @@ import 'package:find_friends/ui/profilepicture/profile_picture_screen.dart';
 import 'package:find_friends/ui/searchfilter/search_filter_screen.dart';
 import 'package:find_friends/ui/signin/code_send_screen.dart';
 import 'package:find_friends/ui/signin/start_screen.dart';
-import 'package:find_friends/ui/signin/widgets/screen/terms_screen.dart';
+import 'package:find_friends/ui/signin/terms_screen.dart';
 import 'package:find_friends/ui/signin/verify_screen.dart';
 import 'package:find_friends/ui/signup/widgets/screen/signup_birth_screen.dart';
 import 'package:find_friends/ui/signup/widgets/screen/signup_gender_screen.dart';
