@@ -19,14 +19,26 @@ import 'package:find_friends/ui/signup/widgets/screen/signup_residence_screen.da
 import 'package:flutter/material.dart';
 
 enum Routes {
-  start(StartScreen()), terms(TermsScreen()), codeSend(CodeSendScreen()), verify(VerifyScreen()),
-  signupFirst(SignupMeetScreen()), signupSecond(SignupGenderScreen()), signupThird(SignupBirthScreen()), signupFourth(SignupResidenceScreen()), signupFifth(SignupNickScreen()),
-  profilePicture(ProfilePictureScreen()),
-  findTie(FindTieScreen()), like(LikeScreen()), chat(ChatScreen()), my(MyScreen()),
-  myEdit(MyEditScreen()), noticeBoard(NoticeBoardScreen()),
-  chatDetail(ChatDetailScreen()),
-  searchFilter(SearchFilterScreen());
+  start('/start', StartScreen()),
+  terms('/terms', TermsScreen()),
+  codeSend('/codesend', CodeSendScreen()),
+  verify('/verify', VerifyScreen()),
+  signupFirst('/signup/meet', SignupMeetScreen()),
+  signupSecond('/signup/gender', SignupGenderScreen()),
+  signupThird('/signup/birth', SignupBirthScreen()),
+  signupFourth('/signup/residence', SignupResidenceScreen()),
+  signupFifth('/signup/nick', SignupNickScreen()),
+  profilePicture('/profilepicture', ProfilePictureScreen()),
+  findTie('/findtie', FindTieScreen()),
+  like('/like', LikeScreen()),
+  chat('/chat', ChatScreen()),
+  my('/my', MyScreen()),
+  myEdit('/my/edit', MyEditScreen()),
+  noticeBoard('/my/noticeboard', NoticeBoardScreen()),
+  chatDetail('/chatdetail', ChatDetailScreen()),
+  searchFilter('/searchfilter', SearchFilterScreen());
 
-  const Routes(this.screen);
+  const Routes(this.path, this.screen);
+  final String path;
   final Widget screen;
 }

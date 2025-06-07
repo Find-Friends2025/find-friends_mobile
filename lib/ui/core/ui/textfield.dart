@@ -8,14 +8,16 @@ class DGTextField extends StatefulWidget {
   final DGIcons? icon;
   final Color? iconColor;
   final TextInputType fieldType;
+  void Function(String)? onChanged;
 
-  const DGTextField({
+  DGTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.icon,
     this.iconColor,
     this.fieldType = TextInputType.text,
+    this.onChanged
   });
 
   @override
@@ -62,6 +64,7 @@ class _DGTextFieldState extends State<DGTextField> {
             ],
             Expanded(
               child: TextField(
+                onChanged: widget.onChanged,
                 keyboardType: widget.fieldType,
                 controller: widget.controller,
                 focusNode: focusNode,

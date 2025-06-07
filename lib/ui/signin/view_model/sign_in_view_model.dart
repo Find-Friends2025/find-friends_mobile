@@ -11,23 +11,27 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
       : _firebaseRepository = repository,
         super(SignInState.initial()) {
     on<SignInPhoneNumEdited>(_onPhoneNumEdited);
+    on<SignInSmsCodeEdited>(_onSmsCodeEdited);
     on<SignInSubmitted>(_onSubmitted);
+    on<SignInVerify>(_onVerify);
   }
 
   void _onPhoneNumEdited(SignInPhoneNumEdited event, Emitter<SignInState> emit) {
     emit(state.copyWith(phoneNum: event.phoneNum));
   }
 
+  void _onSmsCodeEdited(SignInSmsCodeEdited event, Emitter<SignInState> emit) {
+    emit(state.copyWith(phoneNum: event.smsCode));
+  }
+
   Future<void> _onSubmitted(SignInSubmitted event, Emitter<SignInState> emit) async {
     emit(state.copyWith(isSubmit: true, isSuccess: false, isFailure: false));
     
     try {
+      String? value = await _firebaseRepository.login(phoneNum: await formatPhoneNum(state.phoneNum));
 
-      String? value = await _firebaseRepository.login(phoneNum: state.phoneNum);
 
-      print(value);
-
-      emit(state.copyWith(isSubmit: false, isSuccess: true));
+      emit(state.copyWith(verificationId: value, isSubmit: false, isSuccess: true));
     } catch(e) {
       print(e.toString());
 
@@ -38,6 +42,36 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
     }
   }
 
+  Future<void> _onVerify(SignInVerify event, Emitter<SignInState> emit) async {
+    emit(state.copyWith(isVerify: false));
+
+    try {
+      String? value = await _firebaseRepository.credential(verificationId: state.verificationId, smsCode: state.smsCode);
+
+      print(value);
+      emit(state.copyWith(isVerify: true));
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+
+  Future<String> formatPhoneNum(String phoneNum) async {
+    String digitsOnly = phoneNum.replaceAll(RegExp(r'\D'), '');
+
+    String prefixedDigits;
+
+    if (digitsOnly.startsWith('82')) {
+      prefixedDigits = '+$digitsOnly';
+    } else if (digitsOnly.startsWith('0')) {
+      prefixedDigits = '+82${digitsOnly.substring(1)}';
+    } else {
+      prefixedDigits = '+82$digitsOnly';
+    }
+
+    return prefixedDigits;
+
+  }
 
 }
 
@@ -69,6 +103,13 @@ class SignInSubmitted extends SignInEvent {
 
 }
 
+class SignInVerify extends SignInEvent {
+  SignInVerify();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class SignInState extends Equatable {
   final String phoneNum;
   final String smsCode;
@@ -77,6 +118,7 @@ class SignInState extends Equatable {
   final bool isSubmit;
   final bool isSuccess;
   final bool isFailure;
+  final bool isVerify;
 
   const SignInState({
     required this.phoneNum,
@@ -84,7 +126,8 @@ class SignInState extends Equatable {
     required this.verificationId,
     required this.isSubmit,
     required this.isSuccess,
-    required this.isFailure
+    required this.isFailure,
+    required this.isVerify
   });
 
   factory SignInState.initial() {
@@ -94,7 +137,8 @@ class SignInState extends Equatable {
       verificationId: "",
       isSubmit: false,
       isSuccess: false,
-      isFailure: false
+      isFailure: false,
+      isVerify: false
     );
   }
 
@@ -104,7 +148,8 @@ class SignInState extends Equatable {
     String? verificationId,
     bool? isSubmit,
     bool? isSuccess,
-    bool? isFailure
+    bool? isFailure,
+    bool? isVerify
   }) {
     return SignInState(
         phoneNum: phoneNum ?? this.phoneNum,
@@ -113,6 +158,7 @@ class SignInState extends Equatable {
         isSubmit: isSubmit ?? this.isSubmit,
         isSuccess: isSuccess ?? this.isSuccess,
         isFailure: isFailure ?? this.isFailure,
+        isVerify: isVerify ?? this.isVerify,
     );
   }
 

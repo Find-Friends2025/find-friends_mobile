@@ -1,32 +1,37 @@
 import 'package:find_friends/data/firebase/firebase_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'dart:async';
+
 class FirebaseRepositoryImpl extends FirebaseRepository {
   final _instance = FirebaseAuth.instance;
 
+  Completer<String?>? _verificationIdCompleter;
+
   @override
   Future<String?> login({required String phoneNum}) async {
-    String? verificationId;
+    _verificationIdCompleter?.complete(null);
+    _verificationIdCompleter = Completer<String?>();
 
-    _instance.verifyPhoneNumber(
+    await _instance.verifyPhoneNumber(
         phoneNumber: phoneNum,
         verificationCompleted: (PhoneAuthCredential credential) {
-          print(verificationId);
+
         },
         verificationFailed: (FirebaseAuthException e) {
-          throw e;
+          _verificationIdCompleter?.completeError(e);
         },
         codeSent: (String verificationId, int? resendToken) {
-          verificationId = verificationId;
-          print("codeSent: $resendToken");
-        },
-        codeAutoRetrievalTimeout: (_) {
-          throw Exception("Timeout");
-        }
 
+          _verificationIdCompleter?.complete(verificationId);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+
+          _verificationIdCompleter?.complete(verificationId);
+        }
     );
 
-    return null;
+    return _verificationIdCompleter?.future;
   }
 
   @override
@@ -34,17 +39,19 @@ class FirebaseRepositoryImpl extends FirebaseRepository {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
 
-    await _instance
-        .signInWithCredential(credential)
-        .then((value) {
-          return value.credential?.accessToken;
-        }).catchError((error) {
-          throw error;
-        });
+    try {
+      await _instance
+          .signInWithCredential(credential)
+          .then((value) {
+        return value.credential?.accessToken;
+      }).catchError((error) {
+        throw error;
+      });
 
-
-    return null;
-
+      return null;
+    } catch (e) {
+      print("Credential 로그인 실패: $e");
+      throw e;
+    }
   }
-
 }

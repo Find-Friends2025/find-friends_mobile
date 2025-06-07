@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter router() => GoRouter(
-  initialLocation: Routes.findTie.name,
+  initialLocation: Routes.start.path,
   debugLogDiagnostics: true,
-  redirect: _redirect,
+  onException: (context, state, router) {
+
+  },
   routes: [
     for (var item in Routes.values)
       GoRoute(
-        path: item.name,
+        path: item.path,
         builder: (BuildContext context, GoRouterState state) {
           return item.screen;
         },
@@ -17,16 +19,3 @@ GoRouter router() => GoRouter(
   ],
 );
 
-Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  final loggedIn = false;
-  final loggingIn = state.matchedLocation == Routes.start.name;
-  if (!loggedIn) {
-    return Routes.start.name;
-  }
-
-  if (loggingIn) {
-    return Routes.findTie.name;
-  }
-
-  return null;
-}
