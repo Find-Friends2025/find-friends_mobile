@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 @module
 abstract class DioModule {
   @lazySingleton
-  Dio dio(_AuthInterceptor authInterceptor) {
+  Dio dio(AuthInterceptor authInterceptor) {
     final dio = Dio(
       BaseOptions(
         contentType: Headers.jsonContentType,
@@ -22,11 +22,10 @@ abstract class DioModule {
 }
 
 @lazySingleton
-class _AuthInterceptor extends Interceptor {
+class AuthInterceptor extends Interceptor {
   final List<String> _excludedPaths = [
     ""
   ];
-
 
   @override
   void onRequest(
@@ -47,7 +46,6 @@ class _AuthInterceptor extends Interceptor {
       if ("token" != null) {
         try {
 
-          // 서버에 리프레시 요청을 해서 토큰을 받아야합니다.
 
           final originalRequest = err.requestOptions;
           originalRequest.headers['Authorization'] = 'Bearer ${"accessToken"}';
@@ -55,7 +53,6 @@ class _AuthInterceptor extends Interceptor {
           final response = await Dio().fetch(originalRequest);
           return handler.resolve(response);
         } catch (e) {
-          // 토큰을 지우는 과정이 들어가야 합니다.
           return handler.reject(err);
         }
       }

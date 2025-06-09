@@ -1,3 +1,4 @@
+import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/firebase/firebase_repository_impl.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
@@ -7,6 +8,8 @@ import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/textfield.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/signin/verify_screen.dart';
+import 'package:find_friends/ui/signin/view_model/sign_in_event.dart';
+import 'package:find_friends/ui/signin/view_model/sign_in_state.dart';
 import 'package:find_friends/ui/signin/view_model/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +49,7 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => SignInViewModel(repository: FirebaseRepositoryImpl()),
+        create: (context) => getIt<SignInViewModel>(),
       child: BlocConsumer<SignInViewModel, SignInState>(
           listener: (context, state) {
             if(state.isSuccess) {

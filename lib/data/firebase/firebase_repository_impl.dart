@@ -2,7 +2,9 @@ import 'package:find_friends/data/firebase/firebase_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'dart:async';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: FirebaseRepository)
 class FirebaseRepositoryImpl extends FirebaseRepository {
   final _instance = FirebaseAuth.instance;
 

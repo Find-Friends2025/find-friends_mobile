@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/firebase/firebase_repository_impl.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
+import 'package:find_friends/ui/signin/view_model/sign_in_event.dart';
+import 'package:find_friends/ui/signin/view_model/sign_in_state.dart';
 import 'package:find_friends/ui/signin/view_model/sign_in_view_model.dart';
 import 'package:find_friends/ui/signin/widgets/verify_textfield.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +63,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create:
-          (context) => SignInViewModel(repository: FirebaseRepositoryImpl()),
+          (context) => getIt<SignInViewModel>(),
       child: BlocConsumer<SignInViewModel, SignInState>(
         listener: (context, state) {
           if (state.isVerify) {
