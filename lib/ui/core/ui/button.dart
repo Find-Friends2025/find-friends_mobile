@@ -11,6 +11,7 @@ class DGButton extends StatefulWidget {
     required this.text,
     required this.buttonSize,
     required this.onPressed,
+    this.color,
     this.isEnabled = true,
     this.rounded = false,
     this.expand = false,
@@ -21,6 +22,7 @@ class DGButton extends StatefulWidget {
   final String text;
   final ButtonSize buttonSize;
   final VoidCallback onPressed;
+  final Color? color;
   final bool isEnabled;
   final bool rounded;
   final bool expand;
@@ -75,8 +77,8 @@ class _DGButtonState extends State<DGButton> {
     return BoxDecoration(
       color:
           widget.isEnabled
-              ? DGColors.primary
-              : DGColors.primary.withValues(alpha: 0.4),
+              ? widget.color ?? DGColors.primary
+              : (widget.color ?? DGColors.primary).withValues(alpha: 0.4),
       borderRadius: _getRadius(),
     );
   }

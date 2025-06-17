@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:find_friends/config/injectable_init.dart';
+import 'package:find_friends/data/core/storage/token_storage.dart';
+import 'package:find_friends/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
@@ -5,7 +10,7 @@ import 'package:dio/dio.dart';
 @module
 abstract class DioModule {
   @lazySingleton
-  Dio dio(_AuthInterceptor authInterceptor) {
+  Dio dio(AuthInterceptor authInterceptor) {
     final dio = Dio(
       BaseOptions(
         contentType: Headers.jsonContentType,
@@ -22,18 +27,23 @@ abstract class DioModule {
 }
 
 @lazySingleton
-class _AuthInterceptor extends Interceptor {
+class AuthInterceptor extends Interceptor {
   final List<String> _excludedPaths = [
-    ""
+    "/auth/login",
+    "/auth/reigster"
   ];
 
+  final tokenStorage = getIt<TokenStorage>();
 
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    print("onRequest : ${options.path}");
     if (!_excludedPaths.any((path) => options.path.startsWith(path))) {
-      if ("token" != null) {
-        options.headers['Authorization'] = 'Bearer ${"accessToken"}';
+      final token = await tokenStorage.get();
+
+      if (token != null) {
+        options.headers['Authorization'] = 'Bearer ${token.accessToken}';
       }
     }
 
@@ -44,22 +54,28 @@ class _AuthInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
 
-      if ("token" != null) {
+      final token = await tokenStorage.get();
+
+      if (token != null) {
         try {
 
-          // 서버에 리프레시 요청을 해서 토큰을 받아야합니다.
+          final newAccessToken = await _refreshAccessToken(token.refreshToken);
+
+          await tokenStorage.saveOnlyAccess(accessToken: newAccessToken);
 
           final originalRequest = err.requestOptions;
-          originalRequest.headers['Authorization'] = 'Bearer ${"accessToken"}';
+          originalRequest.headers['Authorization'] = 'Bearer ${newAccessToken}';
 
           final response = await Dio().fetch(originalRequest);
           return handler.resolve(response);
         } catch (e) {
-          // 토큰을 지우는 과정이 들어가야 합니다.
+          tokenStorage.delete();
+          goDefaultPage();
           return handler.reject(err);
         }
       }
     }
+
     super.onError(err, handler);
   }
 
@@ -67,9 +83,13 @@ class _AuthInterceptor extends Interceptor {
     final dio = Dio(BaseOptions(baseUrl: dotenv.env['BASE_URL']!));
 
     final response = await dio
-        .post("${""}/refresh", data: {'refreshToken': refreshToken});
+        .post("${dotenv.env["BASE_URL"]!}/auth/refresh", options: Options(
+      headers: {
+        "Authorization": refreshToken
+      }
+    ));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return response.data['accessToken'];
     } else {
       throw Exception('Failed to refresh token');

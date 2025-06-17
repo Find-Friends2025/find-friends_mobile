@@ -1,3 +1,4 @@
+import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/chat/chat_screen.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
@@ -8,6 +9,7 @@ import 'package:find_friends/ui/findtie/find_tie_screen.dart';
 import 'package:find_friends/ui/like/like_screen.dart';
 import 'package:find_friends/ui/my/my_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 typedef OnClickCallBack = void Function(DGIcons);
 
@@ -70,21 +72,22 @@ class HomeBottomNavigationWidget extends StatelessWidget {
   }
 
   void onClickNavItem(BuildContext context, HomeBottomNavItems item) {
-    Navigator.pushAndRemoveUntil(
-      context,
-      PageRouteBuilder(
-        pageBuilder:
-            (context, animation, secondaryAnimation) => switch (item) {
-              HomeBottomNavItems.findTie => const FindTieScreen(),
-              HomeBottomNavItems.like => const LikeScreen(),
-              HomeBottomNavItems.chat => const ChatScreen(),
-              HomeBottomNavItems.my => const MyScreen(),
-            },
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
-      ),
-      (route) => false,
-    );
+    Routes route;
+
+    switch (item) {
+      case HomeBottomNavItems.findTie:
+        route = Routes.findTie;
+      case HomeBottomNavItems.like:
+        route = Routes.like;
+      case HomeBottomNavItems.chat:
+       route = Routes.chat;
+      case HomeBottomNavItems.my:
+        route = Routes.my;
+    }
+
+    context.go(route.path, extra: {
+
+    });
   }
 }
 

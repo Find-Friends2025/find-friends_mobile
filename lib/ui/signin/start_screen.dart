@@ -1,9 +1,11 @@
+import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
-import 'package:find_friends/ui/signin/widgets/screen/terms_screen.dart';
+import 'package:find_friends/ui/signin/terms_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -40,10 +42,7 @@ class StartScreen extends StatelessWidget {
                   text: "전화번호 인증",
                   buttonSize: ButtonSize.large,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TermsScreen()),
-                    );
+                    context.push(Routes.terms.path);
                   },
                   leadingIcon: DGIcons.phone,
                   expand: true,
