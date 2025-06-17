@@ -68,6 +68,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
         listener: (context, state) {
           if (state.isVerify) {
             GoRouter.of(context).go(Routes.findTie.path);
+          } else if (state.isLoginFailed) {
+            context.go(Routes.signupFirst.path);
           }
         },
         builder:

@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_friends/data/core/storage/token_storage.dart';
+import 'package:find_friends/main.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
@@ -76,7 +78,10 @@ class MyScreen extends StatelessWidget {
               text: "로그아웃",
               textColor: DGColors.static.negative,
               onPressed: () {
-                
+                TokenStorage().delete().then((value) {
+                  goDefaultPage();
+                });
+
               },
             ),
           ],

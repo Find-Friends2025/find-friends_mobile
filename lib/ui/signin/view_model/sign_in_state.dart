@@ -11,6 +11,7 @@ class SignInState extends Equatable {
   final bool isVerify;
 
   final bool isLogin;
+  final bool isLoginFailed;
 
   const SignInState({
     required this.phoneNum,
@@ -20,19 +21,21 @@ class SignInState extends Equatable {
     required this.isSuccess,
     required this.isFailure,
     required this.isVerify,
-    required this.isLogin
+    required this.isLogin,
+    required this.isLoginFailed,
   });
 
   factory SignInState.initial() {
     return const SignInState(
-        phoneNum: "",
-        smsCode: "",
-        verificationId: "",
-        isSubmit: false,
-        isSuccess: false,
-        isFailure: false,
-        isVerify: false,
-        isLogin: false
+      phoneNum: "",
+      smsCode: "",
+      verificationId: "",
+      isSubmit: false,
+      isSuccess: false,
+      isFailure: false,
+      isVerify: false,
+      isLogin: false,
+      isLoginFailed: false,
     );
   }
 
@@ -44,7 +47,8 @@ class SignInState extends Equatable {
     bool? isSuccess,
     bool? isFailure,
     bool? isVerify,
-    bool? isLogin
+    bool? isLogin,
+    bool? isLoginFailed,
   }) {
     return SignInState(
       phoneNum: phoneNum ?? this.phoneNum,
@@ -54,14 +58,21 @@ class SignInState extends Equatable {
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
       isVerify: isVerify ?? this.isVerify,
-      isLogin: isLogin ?? this.isLogin
+      isLogin: isLogin ?? this.isLogin,
+      isLoginFailed: isLoginFailed ?? this.isLoginFailed,
     );
   }
 
   @override
-  List<Object?> get props => [phoneNum, smsCode, verificationId, isSubmit, isSuccess, isFailure, isVerify, isLogin];
-
-
+  List<Object?> get props => [
+    phoneNum,
+    smsCode,
+    verificationId,
+    isSubmit,
+    isSuccess,
+    isFailure,
+    isVerify,
+    isLogin,
+    isLoginFailed
+  ];
 }
-
-

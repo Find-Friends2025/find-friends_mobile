@@ -36,6 +36,7 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
       if (isButtonEnabled == controller.text.isNotEmpty) {
         return;
       }
+
       setState(() {
         isButtonEnabled = controller.text.isNotEmpty;
       });

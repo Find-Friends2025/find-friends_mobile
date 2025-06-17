@@ -17,11 +17,11 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
   final AuthRepository _authRepository;
   final TokenStorage _tokenStorage;
 
-  SignInViewModel()
-    : _firebaseRepository = getIt<FirebaseRepository>(),
-      _authRepository = getIt<AuthRepository>(),
-    _tokenStorage = getIt<TokenStorage>(),
-      super(SignInState.initial()) {
+  SignInViewModel(
+      this._firebaseRepository,
+      this._authRepository,
+      this._tokenStorage
+  ) : super(SignInState.initial()) {
     on<SignInPhoneNumEdited>(_onPhoneNumEdited);
     on<SignInSmsCodeEdited>(_onSmsCodeEdited);
     on<SignInInit>(_initState);
@@ -73,14 +73,10 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
         phoneNum: await formatPhoneNum(state.phoneNum),
       );
 
-      print(value);
-
       emit(
         state.copyWith(verificationId: value, isSubmit: false, isSuccess: true),
       );
     } catch (e) {
-      print(e.toString());
-
       emit(state.copyWith(isSubmit: false, isFailure: true));
     }
   }
@@ -93,29 +89,29 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
         verificationId: state.verificationId,
         smsCode: state.smsCode,
       );
-
       if (response == null) { return; }
 
       if (await _login(response.token, emit)) {
         emit(state.copyWith(isVerify: true));
       }
     } catch (e) {
-      print(e.toString());
+      emit(state.copyWith(isLogin: false, isLoginFailed: true));
     }
   }
 
   Future<bool> _login(String xToken, Emitter<SignInState> emit) async {
-    emit(state.copyWith(isLogin: true));
+    emit(state.copyWith(isLogin: true, isLoginFailed: false));
 
     BaseResponse<TokenResponse?> response = await _authRepository.login(xToken: xToken);
 
     if (response.data == null) {
-      emit(state.copyWith(isLogin: false));
+      emit(state.copyWith(isLogin: false, isLoginFailed: true));
       return false;
     }
 
     _tokenStorage.save(accessToken: response.data!.accessToken, refreshToken: response.data!.refreshToken);
 
+    emit(state.copyWith(isLogin: false));
 
     return true;
   }

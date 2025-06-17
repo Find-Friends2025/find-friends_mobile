@@ -23,7 +23,6 @@ class AuthRepositoryImpl extends AuthRepository {
         response.data!,
         (json) => TokenResponse.fromJson(json as Map<String, dynamic>),
       );
-
       return decodedResponse;
     } catch (e) {
       return BaseResponse<TokenResponse?>(status: response.statusCode ?? 400, message: "디코딩에 실패했습니다.", data: null);
@@ -36,6 +35,8 @@ class AuthRepositoryImpl extends AuthRepository {
     required String xToken,
     required RegisterRequest request,
   }) async {
+
+
     final response = await _dio.post<Map<String, dynamic>>(
       "$prefix/register",
       data: request.toJson(),

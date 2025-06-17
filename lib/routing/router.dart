@@ -24,6 +24,7 @@ GoRouter router() => GoRouter(
         path: item.path,
         pageBuilder: (BuildContext context, GoRouterState state) {
           switch (item) {
+            case Routes.start:
             case Routes.findTie:
             case Routes.like:
             case Routes.chat:

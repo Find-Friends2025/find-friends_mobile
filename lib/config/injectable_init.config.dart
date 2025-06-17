@@ -33,12 +33,18 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
-    gh.lazySingleton<_i859.SignInViewModel>(() => _i859.SignInViewModel());
     gh.lazySingleton<_i385.AuthInterceptor>(() => _i385.AuthInterceptor());
     gh.lazySingleton<_i513.TokenStorage>(() => _i513.TokenStorage());
     gh.lazySingleton<_i1037.AuthRepository>(() => _i130.AuthRepositoryImpl());
     gh.lazySingleton<_i783.FirebaseRepository>(
       () => _i606.FirebaseRepositoryImpl(),
+    );
+    gh.lazySingleton<_i859.SignInViewModel>(
+      () => _i859.SignInViewModel(
+        gh<_i783.FirebaseRepository>(),
+        gh<_i1037.AuthRepository>(),
+        gh<_i513.TokenStorage>(),
+      ),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dio(gh<_i385.AuthInterceptor>()),
