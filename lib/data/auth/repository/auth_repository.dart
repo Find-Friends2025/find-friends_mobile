@@ -7,7 +7,5 @@ abstract class AuthRepository extends ChangeNotifier {
 
   Future<BaseResponse<TokenResponse?>> register({required String xToken, required RegisterRequest request});
 
-  Future<String?> refresh();
-
   Future<BaseResponse<TokenResponse?>> login({required String xToken});
 }

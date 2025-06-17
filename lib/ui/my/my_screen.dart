@@ -75,7 +75,9 @@ class MyScreen extends StatelessWidget {
             MyCard(
               text: "로그아웃",
               textColor: DGColors.static.negative,
-              onPressed: () {},
+              onPressed: () {
+                
+              },
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/auth/models/token_response.dart';
 import 'package:find_friends/data/auth/repository/auth_repository.dart';
 import 'package:find_friends/data/core/models/base_response.dart';
+import 'package:find_friends/data/core/storage/token_storage.dart';
 import 'package:find_friends/data/firebase/models/firebase_token_response.dart';
 import 'package:find_friends/data/firebase/repository/firebase_repository.dart';
 import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart';
@@ -14,10 +15,12 @@ import 'package:injectable/injectable.dart';
 class SignInViewModel extends Bloc<SignInEvent, SignInState> {
   final FirebaseRepository _firebaseRepository;
   final AuthRepository _authRepository;
+  final TokenStorage _tokenStorage;
 
   SignInViewModel()
     : _firebaseRepository = getIt<FirebaseRepository>(),
       _authRepository = getIt<AuthRepository>(),
+    _tokenStorage = getIt<TokenStorage>(),
       super(SignInState.initial()) {
     on<SignInPhoneNumEdited>(_onPhoneNumEdited);
     on<SignInSmsCodeEdited>(_onSmsCodeEdited);
@@ -111,7 +114,8 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
       return false;
     }
 
-    print(response.toJson((value) => value!.toJson()));
+    _tokenStorage.save(accessToken: response.data!.accessToken, refreshToken: response.data!.refreshToken);
+
 
     return true;
   }

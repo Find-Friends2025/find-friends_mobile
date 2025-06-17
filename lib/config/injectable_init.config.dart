@@ -15,6 +15,7 @@ import 'package:find_friends/data/auth/repository/auth_repository.dart'
 import 'package:find_friends/data/auth/repository/auth_repository_impl.dart'
     as _i130;
 import 'package:find_friends/data/core/di/dio_module.dart' as _i385;
+import 'package:find_friends/data/core/storage/token_storage.dart' as _i513;
 import 'package:find_friends/data/firebase/repository/firebase_repository.dart'
     as _i783;
 import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart'
@@ -34,6 +35,7 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     gh.lazySingleton<_i859.SignInViewModel>(() => _i859.SignInViewModel());
     gh.lazySingleton<_i385.AuthInterceptor>(() => _i385.AuthInterceptor());
+    gh.lazySingleton<_i513.TokenStorage>(() => _i513.TokenStorage());
     gh.lazySingleton<_i1037.AuthRepository>(() => _i130.AuthRepositoryImpl());
     gh.lazySingleton<_i783.FirebaseRepository>(
       () => _i606.FirebaseRepositoryImpl(),

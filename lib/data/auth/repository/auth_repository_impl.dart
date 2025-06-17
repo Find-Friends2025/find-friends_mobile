@@ -30,11 +30,6 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  @override
-  Future<String?> refresh() {
-    // TODO: implement refresh
-    throw UnimplementedError();
-  }
 
   @override
   Future<BaseResponse<TokenResponse?>> register({
