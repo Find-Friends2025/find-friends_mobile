@@ -1,5 +1,5 @@
 import 'package:find_friends/config/injectable_init.dart';
-import 'package:find_friends/data/firebase/firebase_repository_impl.dart';
+import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
@@ -30,6 +30,8 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
   @override
   void initState() {
     super.initState();
+
+
     controller.addListener(() {
       if (isButtonEnabled == controller.text.isNotEmpty) {
         return;
@@ -54,10 +56,8 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
           listener: (context, state) {
             if(state.isSuccess) {
               context.push(Routes.verify.path);
-            } else if(state.isFailure) {
-              context.pop();
+              context.read<SignInViewModel>().add(SignInInit());
             }
-
           },
           builder: (context, state) => Scaffold(
             backgroundColor: DGColors.background.normal,

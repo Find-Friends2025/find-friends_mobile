@@ -1,63 +1,47 @@
 import 'package:bloc/bloc.dart';
 import 'package:find_friends/config/injectable_init.dart';
-import 'package:find_friends/data/firebase/firebase_repository.dart';
+import 'package:find_friends/data/auth/models/token_response.dart';
+import 'package:find_friends/data/auth/repository/auth_repository.dart';
+import 'package:find_friends/data/core/models/base_response.dart';
+import 'package:find_friends/data/firebase/models/firebase_token_response.dart';
+import 'package:find_friends/data/firebase/repository/firebase_repository.dart';
+import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart';
 import 'package:find_friends/ui/signin/view_model/sign_in_event.dart';
 import 'package:find_friends/ui/signin/view_model/sign_in_state.dart';
 import 'package:injectable/injectable.dart';
 
-
-@Injectable()
+@lazySingleton
 class SignInViewModel extends Bloc<SignInEvent, SignInState> {
   final FirebaseRepository _firebaseRepository;
+  final AuthRepository _authRepository;
 
   SignInViewModel()
-      : _firebaseRepository = getIt<FirebaseRepository>(),
-        super(SignInState.initial()) {
+    : _firebaseRepository = getIt<FirebaseRepository>(),
+      _authRepository = getIt<AuthRepository>(),
+      super(SignInState.initial()) {
     on<SignInPhoneNumEdited>(_onPhoneNumEdited);
     on<SignInSmsCodeEdited>(_onSmsCodeEdited);
+    on<SignInInit>(_initState);
     on<SignInSubmitted>(_onSubmitted);
     on<SignInVerify>(_onVerify);
   }
 
-  void _onPhoneNumEdited(SignInPhoneNumEdited event, Emitter<SignInState> emit) {
+  void _onPhoneNumEdited(
+    SignInPhoneNumEdited event,
+    Emitter<SignInState> emit,
+  ) {
     emit(state.copyWith(phoneNum: event.phoneNum));
   }
 
   void _onSmsCodeEdited(SignInSmsCodeEdited event, Emitter<SignInState> emit) {
-    emit(state.copyWith(phoneNum: event.smsCode));
+    emit(state.copyWith(smsCode: event.smsCode));
   }
 
-  Future<void> _onSubmitted(SignInSubmitted event, Emitter<SignInState> emit) async {
-    emit(state.copyWith(isSubmit: true, isSuccess: false, isFailure: false));
-    
-    try {
-      String? value = await _firebaseRepository.login(phoneNum: await formatPhoneNum(state.phoneNum));
-
-
-      emit(state.copyWith(verificationId: value, isSubmit: false, isSuccess: true));
-    } catch(e) {
-      print(e.toString());
-
-      emit(state.copyWith(
-        isSubmit: false,
-        isFailure: true
-      ));
+  void _initState(SignInInit event, Emitter<SignInState> emit) {
+    if (state.isSuccess) {
+      emit(state.copyWith(isSuccess: false, isFailure: false, isSubmit: false));
     }
   }
-
-  Future<void> _onVerify(SignInVerify event, Emitter<SignInState> emit) async {
-    emit(state.copyWith(isVerify: false));
-
-    try {
-      String? value = await _firebaseRepository.credential(verificationId: state.verificationId, smsCode: state.smsCode);
-
-      print(value);
-      emit(state.copyWith(isVerify: true));
-    } catch(e) {
-      print(e.toString());
-    }
-  }
-
 
   Future<String> formatPhoneNum(String phoneNum) async {
     String digitsOnly = phoneNum.replaceAll(RegExp(r'\D'), '');
@@ -73,10 +57,62 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
     }
 
     return prefixedDigits;
-
   }
 
+  Future<void> _onSubmitted(
+    SignInSubmitted event,
+    Emitter<SignInState> emit,
+  ) async {
+    emit(state.copyWith(isSubmit: true, isSuccess: false, isFailure: false));
+
+    try {
+      String? value = await _firebaseRepository.login(
+        phoneNum: await formatPhoneNum(state.phoneNum),
+      );
+
+      print(value);
+
+      emit(
+        state.copyWith(verificationId: value, isSubmit: false, isSuccess: true),
+      );
+    } catch (e) {
+      print(e.toString());
+
+      emit(state.copyWith(isSubmit: false, isFailure: true));
+    }
+  }
+
+  Future<void> _onVerify(SignInVerify event, Emitter<SignInState> emit) async {
+    emit(state.copyWith(isVerify: false));
+
+    try {
+      FirebaseTokenResponse? response = await _firebaseRepository.credential(
+        verificationId: state.verificationId,
+        smsCode: state.smsCode,
+      );
+
+      if (response == null) { return; }
+
+      if (await _login(response.token, emit)) {
+        emit(state.copyWith(isVerify: true));
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<bool> _login(String xToken, Emitter<SignInState> emit) async {
+    emit(state.copyWith(isLogin: true));
+
+    BaseResponse<TokenResponse?> response = await _authRepository.login(xToken: xToken);
+
+    if (response.data == null) {
+      emit(state.copyWith(isLogin: false));
+      return false;
+    }
+
+    print(response.toJson((value) => value!.toJson()));
+
+    return true;
+  }
 }
-
-
-

@@ -1,3 +1,4 @@
+import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
@@ -5,6 +6,7 @@ import 'package:find_friends/ui/core/ui/checkbox.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/signin/code_send_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TermsScreen extends StatefulWidget {
   const TermsScreen({super.key});
@@ -102,10 +104,7 @@ class _TermsScreenState extends State<TermsScreen> {
               text: "다음",
               buttonSize: ButtonSize.large,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CodeSendScreen()),
-                );
+                context.push(Routes.codeSend.path);
               },
               isEnabled: isAllChecked,
               expand: true,

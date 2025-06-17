@@ -33,3 +33,13 @@ class SignInVerify extends SignInEvent {
   List<Object?> get props => [];
 }
 
+class SignInInit extends SignInEvent {
+  SignInInit();
+
+  @override
+  List<Object?> get props => [];
+
+
+}
+
+

@@ -5,17 +5,34 @@ import 'package:go_router/go_router.dart';
 GoRouter router() => GoRouter(
   initialLocation: Routes.start.path,
   debugLogDiagnostics: true,
-  onException: (context, state, router) {
-
-  },
+  onException: (context, state, router) {},
   routes: [
     for (var item in Routes.values)
       GoRoute(
         path: item.path,
-        builder: (BuildContext context, GoRouterState state) {
-          return item.screen;
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          switch (item) {
+            case Routes.findTie:
+            case Routes.like:
+            case Routes.chat:
+            case Routes.my:
+              return NoTransitionPage(child: item.screen);
+            default:
+              return CustomTransitionPage(
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                            position: animation.drive(
+                              Tween<Offset>(
+                                begin: Offset(0.75, 0),
+                                end: Offset.zero,
+                              ).chain(CurveTween(curve: Curves.linear))),
+                          child: child,
+                        ),
+                child: item.screen,
+              );
+          }
         },
       ),
   ],
 );
-

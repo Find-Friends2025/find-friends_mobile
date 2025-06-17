@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:find_friends/config/injectable_init.dart';
-import 'package:find_friends/data/firebase/firebase_repository_impl.dart';
+import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
@@ -89,9 +89,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       child: VerifyTextField(
                         controller: controller,
                         onChanged: (value) {
-                          context.read<SignInViewModel>().add(
-                            SignInSmsCodeEdited(value),
-                          );
+                          context.read<SignInViewModel>().add(SignInSmsCodeEdited(value));
                         },
                         onCompleted: (value) {},
                       ),
@@ -134,11 +132,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             text: "인증하기",
                             buttonSize: ButtonSize.large,
                             onPressed: () {
-                              context.read<SignInViewModel>().add(
-                                SignInVerify(),
-                              );
+                              context.read<SignInViewModel>().add(SignInVerify());
                             },
-                            isEnabled: isButtonEnabled,
+                            isEnabled: isButtonEnabled && !state.isLogin,
                             expand: true,
                           ),
                         ],

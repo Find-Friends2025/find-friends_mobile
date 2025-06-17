@@ -10,6 +10,8 @@ class SignInState extends Equatable {
   final bool isFailure;
   final bool isVerify;
 
+  final bool isLogin;
+
   const SignInState({
     required this.phoneNum,
     required this.smsCode,
@@ -17,7 +19,8 @@ class SignInState extends Equatable {
     required this.isSubmit,
     required this.isSuccess,
     required this.isFailure,
-    required this.isVerify
+    required this.isVerify,
+    required this.isLogin
   });
 
   factory SignInState.initial() {
@@ -28,7 +31,8 @@ class SignInState extends Equatable {
         isSubmit: false,
         isSuccess: false,
         isFailure: false,
-        isVerify: false
+        isVerify: false,
+        isLogin: false
     );
   }
 
@@ -39,7 +43,8 @@ class SignInState extends Equatable {
     bool? isSubmit,
     bool? isSuccess,
     bool? isFailure,
-    bool? isVerify
+    bool? isVerify,
+    bool? isLogin
   }) {
     return SignInState(
       phoneNum: phoneNum ?? this.phoneNum,
@@ -49,11 +54,12 @@ class SignInState extends Equatable {
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
       isVerify: isVerify ?? this.isVerify,
+      isLogin: isLogin ?? this.isLogin
     );
   }
 
   @override
-  List<Object?> get props => [phoneNum, smsCode, verificationId, isSubmit, isSuccess, isFailure];
+  List<Object?> get props => [phoneNum, smsCode, verificationId, isSubmit, isSuccess, isFailure, isVerify, isLogin];
 
 
 }

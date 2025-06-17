@@ -42,7 +42,7 @@ class StartScreen extends StatelessWidget {
                   text: "전화번호 인증",
                   buttonSize: ButtonSize.large,
                   onPressed: () {
-                    context.push(Routes.codeSend.path);
+                    context.push(Routes.terms.path);
                   },
                   leadingIcon: DGIcons.phone,
                   expand: true,
