@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 
 class ChatDetailBottomBar extends StatelessWidget {
   final TextEditingController controller;
-  const ChatDetailBottomBar({super.key, required this.controller});
+  final GestureTapCallback onPressed;
+  const ChatDetailBottomBar({
+    super.key,
+    required this.controller,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,7 @@ class ChatDetailBottomBar extends StatelessWidget {
               ),
               SizedBox(width: 8),
               DGClickable(
-                onPressed: () {},
+                onPressed: onPressed,
                 child: DGIcons.sendFill.toImage(
                   width: 32,
                   height: 32,
