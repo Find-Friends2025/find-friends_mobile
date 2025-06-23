@@ -1,15 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:find_friends/config/injectable_init.dart';
-import 'package:find_friends/data/auth/repository/auth_repository.dart';
 import 'package:find_friends/data/auth/models/register_request.dart';
 import 'package:find_friends/data/auth/models/token_response.dart';
+import 'package:find_friends/data/auth/repository/auth_repository.dart';
 import 'package:find_friends/data/core/models/base_response.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
-  final _dio = getIt<Dio>();
+  final Dio _dio;
   final prefix = "/auth";
+
+  AuthRepositoryImpl(@Named("api") this._dio);
 
   @override
   Future<BaseResponse<TokenResponse?>> login({required String xToken}) async {
@@ -25,18 +26,19 @@ class AuthRepositoryImpl extends AuthRepository {
       );
       return decodedResponse;
     } catch (e) {
-      return BaseResponse<TokenResponse?>(status: response.statusCode ?? 400, message: "디코딩에 실패했습니다.", data: null);
+      return BaseResponse<TokenResponse?>(
+        status: response.statusCode ?? 400,
+        message: "디코딩에 실패했습니다.",
+        data: null,
+      );
     }
   }
-
 
   @override
   Future<BaseResponse<TokenResponse?>> register({
     required String xToken,
     required RegisterRequest request,
   }) async {
-
-
     final response = await _dio.post<Map<String, dynamic>>(
       "$prefix/register",
       data: request.toJson(),
@@ -51,7 +53,11 @@ class AuthRepositoryImpl extends AuthRepository {
 
       return decodedResponse;
     } catch (e) {
-      return BaseResponse<TokenResponse?>(status: response.statusCode ?? 400, message: "디코딩에 실패했습니다.", data: null);
+      return BaseResponse<TokenResponse?>(
+        status: response.statusCode ?? 400,
+        message: "디코딩에 실패했습니다.",
+        data: null,
+      );
     }
   }
 }

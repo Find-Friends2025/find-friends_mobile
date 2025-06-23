@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter router() => GoRouter(
-  initialLocation: Routes.start.path,
+  initialLocation: Routes.chat.path, //Routes.start.path,
   debugLogDiagnostics: true,
   onException: (context, state, router) {},
   redirect: (context, state) async {
     final tokenStorage = getIt<TokenStorage>();
     final token = await tokenStorage.get();
-
 
     if (state.fullPath == Routes.start.path && token != null) {
       return Routes.findTie.path;
@@ -35,11 +34,12 @@ GoRouter router() => GoRouter(
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>
                         SlideTransition(
-                            position: animation.drive(
-                              Tween<Offset>(
-                                begin: Offset(0.75, 0),
-                                end: Offset.zero,
-                              ).chain(CurveTween(curve: Curves.linear))),
+                          position: animation.drive(
+                            Tween<Offset>(
+                              begin: Offset(0.75, 0),
+                              end: Offset.zero,
+                            ).chain(CurveTween(curve: Curves.linear)),
+                          ),
                           child: child,
                         ),
                 child: item.screen,

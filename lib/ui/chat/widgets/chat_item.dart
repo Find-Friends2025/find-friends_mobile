@@ -25,7 +25,7 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DGClickable(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8),
         width: double.infinity,
