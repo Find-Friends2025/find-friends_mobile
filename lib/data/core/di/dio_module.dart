@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/core/storage/token_storage.dart';
 import 'package:find_friends/main.dart';
@@ -21,7 +22,9 @@ abstract class DioModule {
     );
 
     dio.interceptors.add(authInterceptor);
-    dio.interceptors.add(LogInterceptor(requestHeader: true));
+    dio.interceptors.add(
+      LogInterceptor(requestHeader: true, responseBody: true),
+    );
 
     return dio;
   }
@@ -39,7 +42,9 @@ abstract class DioModule {
     );
 
     dio.interceptors.add(authInterceptor);
-    dio.interceptors.add(LogInterceptor(requestHeader: true));
+    dio.interceptors.add(
+      LogInterceptor(requestHeader: true, responseBody: true),
+    );
 
     return dio;
   }
@@ -47,16 +52,15 @@ abstract class DioModule {
 
 @lazySingleton
 class AuthInterceptor extends Interceptor {
-  final List<String> _excludedPaths = [
-    "/auth/login",
-    "/auth/reigster"
-  ];
+  final List<String> _excludedPaths = ["/auth/login", "/auth/reigster"];
 
   final tokenStorage = getIt<TokenStorage>();
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     print("onRequest : ${options.path}");
     if (!_excludedPaths.any((path) => options.path.startsWith(path))) {
       final token = await tokenStorage.get();
@@ -74,12 +78,10 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-
       final token = await tokenStorage.get();
 
       if (token != null) {
         try {
-
           final newAccessToken = await _refreshAccessToken(token.refreshToken);
 
           await tokenStorage.saveOnlyAccess(accessToken: newAccessToken);
@@ -103,12 +105,10 @@ class AuthInterceptor extends Interceptor {
   Future<String> _refreshAccessToken(String refreshToken) async {
     final dio = Dio(BaseOptions(baseUrl: dotenv.env['BASE_URL']!));
 
-    final response = await dio
-        .post("${dotenv.env["BASE_URL"]!}/auth/refresh", options: Options(
-      headers: {
-        "Authorization": refreshToken
-      }
-    ));
+    final response = await dio.post(
+      "${dotenv.env["BASE_URL"]!}/auth/refresh",
+      options: Options(headers: {"Authorization": refreshToken}),
+    );
 
     if (response.statusCode == HttpStatus.ok) {
       return response.data['accessToken'];

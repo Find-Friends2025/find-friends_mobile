@@ -1,4 +1,5 @@
 import 'package:find_friends/config/injectable_init.dart';
+import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/chat/chat_viewmodel.dart';
 import 'package:find_friends/ui/chat/model/chat_event.dart';
 import 'package:find_friends/ui/chat/model/chat_state.dart';
@@ -8,6 +9,7 @@ import 'package:find_friends/ui/core/ui/home_bottom_navigation_widget.dart';
 import 'package:find_friends/ui/core/ui/home_top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatScreen extends StatelessWidget {
   final bool isNotLoad = false;
@@ -57,7 +59,9 @@ class ChatScreen extends StatelessWidget {
                       item.unreadMessagesCount == 0
                           ? null
                           : item.unreadMessagesCount,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(Routes.chatDetail.path);
+                  },
                 );
               },
               separatorBuilder: (context, index) => SizedBox(height: 8),

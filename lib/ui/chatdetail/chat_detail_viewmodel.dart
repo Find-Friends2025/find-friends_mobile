@@ -120,6 +120,6 @@ class ChatDetailViewModel extends Bloc<ChatDetailEvent, ChatDetailState> {
     ChatDetailReceiveMessage event,
     Emitter<ChatDetailState> emit,
   ) {
-    emit(state.copyWith(messages: state.messages..add(event.message)));
+    emit(state.copyWith(messages: state.messages..insert(0, event.message)));
   }
 }

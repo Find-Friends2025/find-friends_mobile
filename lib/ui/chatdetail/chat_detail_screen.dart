@@ -92,7 +92,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 final nextItem =
                     index - 1 >= 0 ? state.messages[index - 1] : null;
                 final isShowTime = nextItem?.senderId != item.senderId;
-                print(state.myInfo?.id);
                 if (state.myInfo?.id.toString() == item.senderId) {
                   return ChatDetailMyItem(
                     text: item.message,
