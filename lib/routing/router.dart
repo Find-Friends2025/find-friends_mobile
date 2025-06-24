@@ -28,7 +28,7 @@ GoRouter router() => GoRouter(
             case Routes.like:
             case Routes.chat:
             case Routes.my:
-              return NoTransitionPage(child: item.screen);
+              return NoTransitionPage(child: item.getScreen(state));
             default:
               return CustomTransitionPage(
                 transitionsBuilder:
@@ -42,7 +42,7 @@ GoRouter router() => GoRouter(
                           ),
                           child: child,
                         ),
-                child: item.screen,
+                child: item.getScreen(state),
               );
           }
         },

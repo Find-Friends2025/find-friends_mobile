@@ -28,6 +28,8 @@ import 'package:find_friends/domain/repository/chat_repository.dart' as _i492;
 import 'package:find_friends/domain/repository/user_repository.dart' as _i376;
 import 'package:find_friends/ui/chat/chat_viewmodel.dart' as _i348;
 import 'package:find_friends/ui/chatdetail/chat_detail_viewmodel.dart' as _i368;
+import 'package:find_friends/ui/my/viewmodel/my_edit_viewmodel.dart' as _i6;
+import 'package:find_friends/ui/my/viewmodel/my_viewmodel.dart' as _i517;
 import 'package:find_friends/ui/signin/view_model/sign_in_view_model.dart'
     as _i859;
 import 'package:get_it/get_it.dart' as _i174;
@@ -68,6 +70,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i376.UserRepository>(
       () => _i907.UserRepositoryImpl(gh<_i361.Dio>(instanceName: 'api')),
+    );
+    gh.factory<_i6.MyEditViewModel>(
+      () => _i6.MyEditViewModel(gh<_i376.UserRepository>()),
+    );
+    gh.factory<_i517.MyViewModel>(
+      () => _i517.MyViewModel(gh<_i376.UserRepository>()),
     );
     gh.lazySingleton<_i859.SignInViewModel>(
       () => _i859.SignInViewModel(
