@@ -107,8 +107,18 @@ class _MyScreenState extends State<MyScreen> {
                     height: 1,
                     margin: EdgeInsets.symmetric(vertical: 8),
                   ),
-                  MyCard(text: "공지 사항", onPressed: () {}),
-                  MyCard(text: "내가 보낸 좋아요", onPressed: () {}),
+                  MyCard(
+                    text: "공지 사항",
+                    onPressed: () {
+                      context.push(Routes.noticeBoard.path);
+                    },
+                  ),
+                  // MyCard(
+                  //   text: "내가 보낸 좋아요",
+                  //   onPressed: () {
+                  //     context.push(Routes.noticeBoard.path);
+                  //   },
+                  // ),
                   MyCard(
                     text: "로그아웃",
                     textColor: DGColors.static.negative,

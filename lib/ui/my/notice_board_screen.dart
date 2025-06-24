@@ -19,11 +19,11 @@ class NoticeBoardScreen extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               ...List.generate(
-                10,
+                1,
                 (index) => NoticeCard(
-                  title: "공지사항 제목",
+                  title: "버전 v1.0 출시",
                   content:
-                      "공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항",
+                      "드디어 기다리던 버전 1.0을 출시하게 되었습니다.\n많은 분들의 관심과 응원 덕분에 여기까지 올 수 있었습니다.\n앞으로도 꾸준히 업데이트하며 더 나은 서비스를 제공하겠습니다.\n사용자 여러분의 소중한 피드백도 언제든지 환영합니다!",
                 ),
               ),
             ],
