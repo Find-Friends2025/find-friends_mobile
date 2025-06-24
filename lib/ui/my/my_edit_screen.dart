@@ -21,7 +21,7 @@ class MyEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<MyEditViewModel>(),
+      create: (_) => getIt<MyEditViewModel>()..add(MyEditInitStateEvent(user)),
       child: BlocBuilder<MyEditViewModel, MyEditState>(
         builder: (context, state) {
           return Scaffold(
@@ -71,28 +71,94 @@ class MyEditScreen extends StatelessWidget {
                     ),
                     MyEditCard(
                       name: "자기소개",
-                      content: user.introduce,
+                      content: state.intro ?? user.introduce,
                       type: SheetType.text,
+                      onChanged: (value) {
+                        context.read<MyEditViewModel>().add(
+                          MyEditIntroChanged(value),
+                        );
+                      },
                     ),
                     MyEditCard(
                       name: "닉네임",
-                      content: user.nickname,
+                      content: state.nickname ?? user.nickname,
                       type: SheetType.text,
+                      onChanged: (value) {
+                        context.read<MyEditViewModel>().add(
+                          MyEditNicknameChanged(value),
+                        );
+                      },
                     ),
                     MyEditCard(
                       name: "성별",
-                      content: user.bodyType,
+                      content:
+                          (state.gender?.alias ?? user.bodyType?.alias ?? ""),
                       type: SheetType.radio,
+                      onChanged: (value) {
+                        if (value != null) {
+                          context.read<MyEditViewModel>().add(
+                            MyEditGenderChanged(value),
+                          );
+                        }
+                      },
                     ),
-                    // MyEditCard(
-                    //   name: "생년월일",
-                    //   content: user. "2007-08-07",
-                    //   type: SheetType.date,
-                    // ),
+                    MyEditCard(
+                      name: "생년월일",
+                      content: (state.birth != null
+                          ? _formatDate(state.birth!)
+                          : (user.birth != null ? _formatDate(user.birth!) : "")),
+                      type: SheetType.date,
+                      onChanged: (value) {
+                        if (value is DateTime) {
+                          context.read<MyEditViewModel>().add(
+                            MyEditBirthChanged(value),
+                          );
+                        }
+                      },
+                    ),
                     MyEditCard(
                       name: "거주지",
-                      content: user.residence,
+                      content:
+                          (state.residence?.alias ??
+                              user.residence?.alias ??
+                              ""),
                       type: SheetType.residence,
+                      onChanged: (value) {
+                        if (value != null) {
+                          context.read<MyEditViewModel>().add(
+                            MyEditResidenceChanged(value),
+                          );
+                        }
+                      },
+                    ),
+                    MyEditCard(
+                      name: "키",
+                      content:
+                          (state.height?.toString() ??
+                              user.height?.toString() ??
+                              ""),
+                      type: SheetType.text,
+                      onChanged: (value) {
+                        final intValue = int.tryParse(value);
+                        if (intValue != null) {
+                          context.read<MyEditViewModel>().add(
+                            MyEditHeightChanged(intValue),
+                          );
+                        }
+                      },
+                    ),
+                    MyEditCard(
+                      name: "나이",
+                      content: (state.age?.toString() ?? user.age.toString()),
+                      type: SheetType.text,
+                      onChanged: (value) {
+                        final intValue = int.tryParse(value);
+                        if (intValue != null) {
+                          context.read<MyEditViewModel>().add(
+                            MyEditAgeChanged(intValue),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -134,5 +200,9 @@ class MyEditScreen extends StatelessWidget {
             ],
           ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    return "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 }
