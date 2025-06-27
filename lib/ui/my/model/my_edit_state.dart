@@ -6,6 +6,7 @@ import 'package:find_friends/domain/enums/residence.dart';
 
 final class MyEditState extends Equatable {
   final File? profileImageFile; // 선택된 이미지 파일
+  final String? profileImageUrl;
   final String? intro;
   final String? nickname;
   final Gender? gender;
@@ -16,6 +17,7 @@ final class MyEditState extends Equatable {
 
   const MyEditState({
     this.profileImageFile,
+    this.profileImageUrl,
     this.intro,
     this.nickname,
     this.gender,
@@ -27,6 +29,7 @@ final class MyEditState extends Equatable {
 
   MyEditState copyWith({
     File? profileImageFile,
+    String? profileImageUrl,
     String? intro,
     String? nickname,
     Gender? gender,
@@ -37,6 +40,7 @@ final class MyEditState extends Equatable {
   }) {
     return MyEditState(
       profileImageFile: profileImageFile ?? this.profileImageFile,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       intro: intro ?? this.intro,
       nickname: nickname ?? this.nickname,
       gender: gender ?? this.gender,
@@ -48,5 +52,15 @@ final class MyEditState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [profileImageFile, intro, nickname, gender, residence, height, age, birth];
+  List<Object?> get props => [
+    profileImageFile,
+    profileImageUrl,
+    intro,
+    nickname,
+    gender,
+    residence,
+    height,
+    age,
+    birth,
+  ];
 }

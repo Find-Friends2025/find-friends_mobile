@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:find_friends/data/core/models/base_response.dart';
+import 'package:find_friends/data/user/models/image_response.dart';
 import 'package:find_friends/data/user/models/user_response.dart';
 import 'package:find_friends/domain/enums/gender.dart';
 import 'package:find_friends/domain/enums/residence.dart';
@@ -37,7 +38,10 @@ class UserRepositoryImpl implements UserRepository {
       data: formData,
       options: Options(contentType: 'multipart/form-data'),
     );
-    return BaseResponse.fromJson(response.data!, (json) => json as String).data;
+    return BaseResponse.fromJson(
+      response.data!,
+      (json) => ImageResponse.fromJson(json as Map<String, dynamic>),
+    ).data.imgUrl;
   }
 
   @override

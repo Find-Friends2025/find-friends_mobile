@@ -63,6 +63,7 @@ class MyEditViewModel extends Bloc<MyEditEvent, MyEditState> {
   ) async {
     emit(
       state.copyWith(
+        profileImageUrl: event.user.profilePicUrl,
         intro: event.user.introduce,
         nickname: event.user.nickname,
         residence: event.user.residence,
@@ -110,6 +111,9 @@ class MyEditViewModel extends Bloc<MyEditEvent, MyEditState> {
       final url = await _userRepository.uploadProfileImage(File(result!.path));
       // TODO: emit state with uploaded image URL if needed
       print('업로드 성공: $url');
+      final newState = state.copyWith(profileImageUrl: url);
+      emit(newState);
+      await _patchMyInfoWithState(newState);
     } catch (e) {
       print('이미지 업로드 실패: $e');
     }
@@ -117,7 +121,7 @@ class MyEditViewModel extends Bloc<MyEditEvent, MyEditState> {
 
   Future<void> _patchMyInfoWithState(MyEditState s) async {
     await _userRepository.patchMyInfo(
-      profilePicUrl: "", // 실제 URL로 교체 필요
+      profilePicUrl: s.profileImageUrl ?? "", // 실제 URL로 교체 필요
       nickname: s.nickname ?? "",
       age: s.age ?? 0,
       residence: s.residence,

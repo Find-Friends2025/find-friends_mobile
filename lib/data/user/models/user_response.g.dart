@@ -7,17 +7,13 @@ part of 'user_response.dart';
 // **************************************************************************
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
-  id: json['id'] as int,
+  id: (json['id'] as num).toInt(),
   profilePicUrl: json['profilePicUrl'] as String,
   nickname: json['nickname'] as String,
-  age: json['age'] as int,
-  residence: json['residence'] == null
-      ? null
-      : Residence.values.firstWhere((e) => e.toString() == 'Residence.' + json['residence']),
-  height: json['height'] as int?,
-  bodyType: json['bodyType'] == null
-      ? null
-      : Gender.values.firstWhere((e) => e.toString() == 'Gender.' + json['bodyType']),
+  age: (json['age'] as num).toInt(),
+  residence: $enumDecodeNullable(_$ResidenceEnumMap, json['residence']),
+  height: (json['height'] as num?)?.toInt(),
+  bodyType: $enumDecodeNullable(_$GenderEnumMap, json['bodyType']),
   introduce: json['introduce'] as String?,
   isOnline: json['isOnline'] as bool,
   isLiked: json['isLiked'] as bool,
@@ -30,9 +26,9 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'profilePicUrl': instance.profilePicUrl,
       'nickname': instance.nickname,
       'age': instance.age,
-      'residence': instance.residence?.toString().split('.').last,
+      'residence': _$ResidenceEnumMap[instance.residence],
       'height': instance.height,
-      'bodyType': instance.bodyType?.toString().split('.').last,
+      'bodyType': _$GenderEnumMap[instance.bodyType],
       'introduce': instance.introduce,
       'isOnline': instance.isOnline,
       'isLiked': instance.isLiked,
