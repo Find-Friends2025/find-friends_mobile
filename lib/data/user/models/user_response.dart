@@ -1,3 +1,5 @@
+import 'package:find_friends/domain/enums/gender.dart';
+import 'package:find_friends/domain/enums/residence.dart';
 import 'package:find_friends/domain/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,12 +11,13 @@ class UserResponse {
   final String profilePicUrl;
   final String nickname;
   final int age;
-  final String residence;
+  final Residence? residence;
   final int? height;
-  final String? bodyType;
+  final Gender? bodyType;
   final String? introduce;
   final bool isOnline;
   final bool isLiked;
+  final DateTime? birth;
 
   const UserResponse({
     required this.id,
@@ -27,6 +30,7 @@ class UserResponse {
     required this.introduce,
     required this.isOnline,
     required this.isLiked,
+    this.birth,
   });
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
@@ -45,5 +49,6 @@ class UserResponse {
     introduce: introduce,
     isOnline: isOnline,
     isLiked: isLiked,
+    birth: birth,
   );
 }

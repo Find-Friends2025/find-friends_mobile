@@ -8,12 +8,14 @@ class MyEditCard extends StatelessWidget {
   final String name;
   final String? content;
   final SheetType type;
+  final Function(dynamic value)? onChanged;
 
   const MyEditCard({
     super.key,
     required this.name,
     required this.content,
     required this.type,
+    this.onChanged,
   });
 
   @override
@@ -24,10 +26,16 @@ class MyEditCard extends StatelessWidget {
         spacing: 5,
         children: [
           DGClickable(
-            onPressed: () {
-              Scaffold.of(context).showBottomSheet((BuildContext context) {
-                return MyBottomSheet(type: this.type);
-              });
+            onPressed: () async {
+              final result = await showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return MyBottomSheet(type: this.type);
+                },
+              );
+              if (result != null && onChanged != null) {
+                onChanged!(result);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),

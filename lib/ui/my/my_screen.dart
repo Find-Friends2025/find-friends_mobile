@@ -18,16 +18,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class MyScreen extends StatelessWidget {
+class MyScreen extends StatefulWidget {
   const MyScreen({super.key});
 
   @override
+  State<MyScreen> createState() => _MyScreenState();
+}
+
+class _MyScreenState extends State<MyScreen> {
+  late MyViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = MyViewModel(getIt<UserRepository>());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ModalRoute.of(context)?.isCurrent ?? false) {
+        viewModel.add(MyLoadEvent());
+      }
+    });
     return BlocProvider(
-      create: (_) => MyViewModel(getIt<UserRepository>())..add(MyLoadEvent()),
+      create: (_) => viewModel,
       child: BlocBuilder<MyViewModel, MyState>(
         builder: (context, state) {
-          print("state change: ${state.myInfo}");
           return Scaffold(
             appBar: HomeTopBarWidget(title: "마이페이지", actions: []),
             bottomNavigationBar: HomeBottomNavigationWidget(
@@ -90,8 +107,18 @@ class MyScreen extends StatelessWidget {
                     height: 1,
                     margin: EdgeInsets.symmetric(vertical: 8),
                   ),
-                  MyCard(text: "공지 사항", onPressed: () {}),
-                  MyCard(text: "내가 보낸 좋아요", onPressed: () {}),
+                  MyCard(
+                    text: "공지 사항",
+                    onPressed: () {
+                      context.push(Routes.noticeBoard.path);
+                    },
+                  ),
+                  // MyCard(
+                  //   text: "내가 보낸 좋아요",
+                  //   onPressed: () {
+                  //     context.push(Routes.noticeBoard.path);
+                  //   },
+                  // ),
                   MyCard(
                     text: "로그아웃",
                     textColor: DGColors.static.negative,
