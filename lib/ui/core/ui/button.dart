@@ -57,7 +57,6 @@ class _DGButtonState extends State<DGButton> {
                   child: _buildContent(),
                 )
                 : Align(
-                  // wrap할 때
                   alignment: Alignment.center,
                   child: IntrinsicWidth(
                     child: Container(

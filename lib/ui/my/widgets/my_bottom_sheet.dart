@@ -1,5 +1,6 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
+import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/core/ui/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -109,10 +110,30 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                         child: Wrap(
                           spacing: 6,
                           runSpacing: 6,
-                          children: List.generate(
-                            Residence.values.length,
-                            (i) => Text(Residence.values[i].alias),
-                          ),
+                          children: List.generate(Residence.values.length, (i) {
+                            Residence item = Residence.values[i];
+                            return DGClickable(
+                              onPressed: () {
+
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: "" == item.alias ? DGColors.primary : DGColors.label.disable),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  item.alias,
+                                  style: DGTypography.headline2Medium.copyWith(
+                                    color: "" == item.alias ? DGColors.primary : DGColors.label.disable,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     );

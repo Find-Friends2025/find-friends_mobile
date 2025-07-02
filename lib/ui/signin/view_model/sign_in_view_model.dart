@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/auth/models/token_response.dart';
@@ -89,7 +91,12 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
         verificationId: state.verificationId,
         smsCode: state.smsCode,
       );
+
+
       if (response == null) { return; }
+
+      emit(state.copyWith(uid: response.uid, xToken: response.token));
+
 
       if (await _login(response.token, emit)) {
         emit(state.copyWith(isVerify: true));
@@ -104,7 +111,7 @@ class SignInViewModel extends Bloc<SignInEvent, SignInState> {
 
     BaseResponse<TokenResponse?> response = await _authRepository.login(xToken: xToken);
 
-    if (response.data == null) {
+    if (response.data == null && response.status == HttpStatus.notFound) {
       emit(state.copyWith(isLogin: false, isLoginFailed: true));
       return false;
     }

@@ -13,6 +13,9 @@ class SignInState extends Equatable {
   final bool isLogin;
   final bool isLoginFailed;
 
+  final String uid;
+  final String xToken;
+
   const SignInState({
     required this.phoneNum,
     required this.smsCode,
@@ -23,6 +26,8 @@ class SignInState extends Equatable {
     required this.isVerify,
     required this.isLogin,
     required this.isLoginFailed,
+    required this.uid,
+    required this.xToken
   });
 
   factory SignInState.initial() {
@@ -30,6 +35,8 @@ class SignInState extends Equatable {
       phoneNum: "",
       smsCode: "",
       verificationId: "",
+      uid: "",
+      xToken: "",
       isSubmit: false,
       isSuccess: false,
       isFailure: false,
@@ -43,6 +50,8 @@ class SignInState extends Equatable {
     String? phoneNum,
     String? smsCode,
     String? verificationId,
+    String? uid,
+    String? xToken,
     bool? isSubmit,
     bool? isSuccess,
     bool? isFailure,
@@ -54,6 +63,8 @@ class SignInState extends Equatable {
       phoneNum: phoneNum ?? this.phoneNum,
       smsCode: smsCode ?? this.smsCode,
       verificationId: verificationId ?? this.verificationId,
+      uid: uid ?? this.uid,
+      xToken: xToken ?? this.xToken,
       isSubmit: isSubmit ?? this.isSubmit,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -68,6 +79,8 @@ class SignInState extends Equatable {
     phoneNum,
     smsCode,
     verificationId,
+    uid,
+    xToken,
     isSubmit,
     isSuccess,
     isFailure,

@@ -2,16 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
+import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:flutter/material.dart';
 
-class FindTieCard extends StatelessWidget {
+class FindTieCard extends StatefulWidget {
   final String imageUrl;
   final String userName;
   final String userLocation;
   final bool isOnline;
-  final bool isLike;
+  bool isLike;
 
-  const FindTieCard({
+  FindTieCard({
     super.key,
     required this.imageUrl,
     required this.userName,
@@ -20,6 +21,11 @@ class FindTieCard extends StatelessWidget {
     required this.isLike,
   });
 
+  @override
+  State<FindTieCard> createState() => _FindTieCardState();
+}
+
+class _FindTieCardState extends State<FindTieCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,14 +37,19 @@ class FindTieCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: AspectRatio(
-              aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+                  aspectRatio: 1,
+                  child: widget.imageUrl.isNotEmpty ? CachedNetworkImage(
+                    imageUrl: widget.imageUrl,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget:
+                        (context, url, error) =>
+                        Image.asset("assets/images/profile_placeholder.png"),
+                  ) : Image.asset("assets/images/profile_placeholder.png")
+              )
             ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +60,7 @@ class FindTieCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userName,
+                    widget.userName,
                     style: DGTypography.bodyMedium.copyWith(
                       color: DGColors.label.normal,
                     ),
@@ -65,13 +76,13 @@ class FindTieCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(99),
                           color:
-                              isOnline
+                              widget.isOnline
                                   ? DGColors.static.positive
                                   : DGColors.label.assistive,
                         ),
                       ),
                       Text(
-                        userLocation,
+                        widget.userLocation,
                         style: DGTypography.bodyMedium.copyWith(
                           color: DGColors.label.normal,
                         ),
@@ -80,10 +91,17 @@ class FindTieCard extends StatelessWidget {
                   ),
                 ],
               ),
-              DGIcons.like.toImage(
-                width: 32,
-                height: 32,
-                color: isLike ? DGColors.primary : DGColors.label.assistive,
+              DGClickable(
+                onPressed: () {
+                  setState(() {
+                    widget.isLike = !widget.isLike;
+                  });
+                },
+                child: DGIcons.like.toImage(
+                  width: 32,
+                  height: 32,
+                  color: widget.isLike ? DGColors.primary : DGColors.label.assistive,
+                ),
               ),
             ],
           ),

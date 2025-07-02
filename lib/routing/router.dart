@@ -1,11 +1,15 @@
 import 'package:find_friends/config/injectable_init.dart';
+import 'package:find_friends/data/auth/repository/auth_repository.dart';
 import 'package:find_friends/data/core/storage/token_storage.dart';
 import 'package:find_friends/routing/routes.dart';
+import 'package:find_friends/ui/signup/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+
 GoRouter router() => GoRouter(
-  initialLocation: Routes.chat.path, //Routes.start.path,
+  initialLocation: Routes.start.path,
   debugLogDiagnostics: true,
   onException: (context, state, router) {},
   redirect: (context, state) async {
@@ -22,6 +26,7 @@ GoRouter router() => GoRouter(
       GoRoute(
         path: item.path,
         pageBuilder: (BuildContext context, GoRouterState state) {
+
           switch (item) {
             case Routes.start:
             case Routes.findTie:
@@ -45,7 +50,14 @@ GoRouter router() => GoRouter(
                 child: item.getScreen(state),
               );
           }
+
         },
       ),
   ],
 );
+
+void popUntilRoot() {
+  while (router().canPop()) {
+    router().pop();
+  }
+}

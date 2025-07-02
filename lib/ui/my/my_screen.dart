@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/core/storage/token_storage.dart';
 import 'package:find_friends/domain/repository/user_repository.dart';
-import 'package:find_friends/main.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
@@ -24,7 +23,7 @@ class MyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => MyViewModel(getIt<UserRepository>())..add(MyLoadEvent()),
+      create: (_) => MyViewModel(getIt<UserRepository>(), getIt<TokenStorage>())..add(MyLoadEvent()),
       child: BlocBuilder<MyViewModel, MyState>(
         builder: (context, state) {
           print("state change: ${state.myInfo}");
@@ -47,8 +46,10 @@ class MyScreen extends StatelessWidget {
                       imageUrl: state.myInfo?.profilePicUrl ?? "",
                       placeholder:
                           (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Image.asset("assets/images/profile_placeholder.png"),
                       width: 150,
                       height: 150,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   if (state.myInfo != null)
@@ -96,9 +97,7 @@ class MyScreen extends StatelessWidget {
                     text: "로그아웃",
                     textColor: DGColors.static.negative,
                     onPressed: () {
-                      TokenStorage().delete().then((value) {
-                        goDefaultPage();
-                      });
+                      context.read<MyViewModel>().add(MyLogOut());
                     },
                   ),
                 ],

@@ -28,10 +28,14 @@ import 'package:find_friends/domain/repository/chat_repository.dart' as _i492;
 import 'package:find_friends/domain/repository/user_repository.dart' as _i376;
 import 'package:find_friends/ui/chat/chat_viewmodel.dart' as _i348;
 import 'package:find_friends/ui/chatdetail/chat_detail_viewmodel.dart' as _i368;
+import 'package:find_friends/ui/findtie/view_model/find_tie_view_model.dart'
+    as _i420;
 import 'package:find_friends/ui/my/viewmodel/my_edit_viewmodel.dart' as _i6;
 import 'package:find_friends/ui/my/viewmodel/my_viewmodel.dart' as _i517;
 import 'package:find_friends/ui/signin/view_model/sign_in_view_model.dart'
     as _i859;
+import 'package:find_friends/ui/signup/view_model/sign_up_view_model.dart'
+    as _i241;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -71,16 +75,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i376.UserRepository>(
       () => _i907.UserRepositoryImpl(gh<_i361.Dio>(instanceName: 'api')),
     );
+    gh.lazySingleton<_i420.FindTieViewModel>(
+      () => _i420.FindTieViewModel(gh<_i376.UserRepository>()),
+    );
     gh.factory<_i6.MyEditViewModel>(
       () => _i6.MyEditViewModel(gh<_i376.UserRepository>()),
-    );
-    gh.factory<_i517.MyViewModel>(
-      () => _i517.MyViewModel(gh<_i376.UserRepository>()),
     );
     gh.lazySingleton<_i859.SignInViewModel>(
       () => _i859.SignInViewModel(
         gh<_i783.FirebaseRepository>(),
         gh<_i1037.AuthRepository>(),
+        gh<_i513.TokenStorage>(),
+      ),
+    );
+    gh.lazySingleton<_i241.SignUpViewModel>(
+      () => _i241.SignUpViewModel(
+        gh<_i1037.AuthRepository>(),
+        gh<_i513.TokenStorage>(),
+      ),
+    );
+    gh.factory<_i517.MyViewModel>(
+      () => _i517.MyViewModel(
+        gh<_i376.UserRepository>(),
         gh<_i513.TokenStorage>(),
       ),
     );

@@ -51,8 +51,8 @@ class _CodeSendScreenState extends State<CodeSendScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getIt<SignInViewModel>(),
+    return BlocProvider.value(
+        value: getIt<SignInViewModel>(),
       child: BlocConsumer<SignInViewModel, SignInState>(
           listener: (context, state) {
             if(state.isSuccess) {

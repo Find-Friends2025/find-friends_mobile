@@ -1,5 +1,6 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
+import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/searchfilter/widgets/search_filter_card.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,21 @@ class SearchFilterScreen extends StatelessWidget {
               SearchFilterCard(text: "체형", subText: "상관 없음"),
               SearchFilterCard(text: "자기소개 있음", toggleValue: false),
               SearchFilterCard(text: "회원가입 3일 이내", toggleValue: true),
+              Spacer(),
+              DGButton(
+                onPressed: () {},
+                text: "검색",
+                buttonSize: ButtonSize.large,
+                expand: true,
+              ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0.0,
+        color: DGColors.static.white,
+        height: 0,
       ),
     );
   }

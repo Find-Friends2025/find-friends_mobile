@@ -29,7 +29,7 @@ class _DGColorsLabel {
   Color get neutral => const Color(0xff3B3B40);
   Color get alternative => const Color(0xff5E5E66);
   Color get assistive => const Color(0xff767680);
-  Color get disable => const Color(0xffF6F6F7);
+  Color get disable => const Color(0xffC4C4C4);
 }
 
 class _DGColorsLine {

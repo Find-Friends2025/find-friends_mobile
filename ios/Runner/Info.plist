@@ -62,5 +62,7 @@
     <string>이 앱은 사진 촬영을 위해 카메라 접근을 요청합니다.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>이 앱은 사진을 선택하기 위해 사진 라이브러리에 접근합니다.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>이 앱은 지인과의 매칭을 피하기 위해 연락처에 접근합니다.</string>
 </dict>
 </plist>

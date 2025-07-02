@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:find_friends/config/injectable_init.dart';
 import 'package:find_friends/data/firebase/repository/firebase_repository_impl.dart';
+import 'package:find_friends/routing/router.dart';
 import 'package:find_friends/routing/routes.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
+import 'package:find_friends/ui/core/ui/button.dart';
 import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/signin/view_model/sign_in_event.dart';
@@ -13,8 +15,6 @@ import 'package:find_friends/ui/signin/widgets/verify_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../core/ui/button.dart';
 
 class VerifyScreen extends StatefulWidget {
   const VerifyScreen({super.key});
@@ -61,15 +61,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) => getIt<SignInViewModel>(),
+    return BlocProvider.value(
+      value: getIt<SignInViewModel>(),
       child: BlocConsumer<SignInViewModel, SignInState>(
         listener: (context, state) {
           if (state.isVerify) {
             GoRouter.of(context).go(Routes.findTie.path);
           } else if (state.isLoginFailed) {
-            context.go(Routes.signupFirst.path);
+            context.go(Routes.signupFirst.path, extra: {"uid": state.uid, "xToken": state.xToken});
           }
         },
         builder:

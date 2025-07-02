@@ -1,6 +1,7 @@
 import 'package:find_friends/domain/models/user.dart';
 import 'package:find_friends/ui/chat/chat_screen.dart';
 import 'package:find_friends/ui/chatdetail/chat_detail_screen.dart';
+import 'package:find_friends/ui/findtie/find_tie_detail_screen.dart';
 import 'package:find_friends/ui/findtie/find_tie_screen.dart';
 import 'package:find_friends/ui/like/like_screen.dart';
 import 'package:find_friends/ui/my/my_edit_screen.dart';
@@ -32,6 +33,7 @@ enum Routes {
   signupFifth('/signup/nick'),
   profilePicture('/profilepicture'),
   findTie('/findtie'),
+  findTieDetail('/findtie/detail'),
   like('/like'),
   chat('/chat'),
   my('/my'),
@@ -67,6 +69,8 @@ enum Routes {
         return const ProfilePictureScreen();
       case Routes.findTie:
         return const FindTieScreen();
+      case Routes.findTieDetail:
+        return FindTieDetailScreen();
       case Routes.like:
         return const LikeScreen();
       case Routes.chat:

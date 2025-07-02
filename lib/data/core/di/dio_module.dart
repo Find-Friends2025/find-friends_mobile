@@ -52,7 +52,7 @@ abstract class DioModule {
 
 @lazySingleton
 class AuthInterceptor extends Interceptor {
-  final List<String> _excludedPaths = ["/auth/login", "/auth/reigster"];
+  final List<String> _excludedPaths = ["/auth/login", "/auth/register"];
 
   final tokenStorage = getIt<TokenStorage>();
 

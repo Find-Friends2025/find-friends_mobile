@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:find_friends/data/core/models/base_response.dart';
+import 'package:find_friends/data/user/models/search_user_request.dart';
 import 'package:find_friends/data/user/models/user_response.dart';
 import 'package:find_friends/domain/models/user.dart';
 import 'package:find_friends/domain/repository/user_repository.dart';
@@ -36,4 +37,18 @@ class UserRepositoryImpl implements UserRepository {
       (json) => json as String,
     ).data;
   }
+
+  @override
+  Future<List<User>> getUsers(SearchUserRequest request) async {
+    final response = await _dio.get(
+        "/user",
+      queryParameters: request.toJson()
+    );
+
+    BaseResponse<List<UserResponse>> decodedResponse = BaseResponse.fromJson(response.data, (data) => (data as List).map((e) => UserResponse.fromJson(e)).toList());
+
+    return decodedResponse.data.map((e) => e.toModel()).toList();
+  }
+
+
 }

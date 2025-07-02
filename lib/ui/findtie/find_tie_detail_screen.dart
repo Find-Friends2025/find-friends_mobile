@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_friends/domain/models/user.dart';
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/themes/icons.dart';
 import 'package:find_friends/ui/core/themes/typography.dart';
@@ -6,26 +7,36 @@ import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/core/ui/topbar.dart';
 import 'package:find_friends/ui/findtie/widgets/find_tie_detail_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class FindTieDetailScreen extends StatelessWidget {
-  final List<String> testItems = ["test", "test1"];
 
   FindTieDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    User item = GoRouterState.of(context).extra as User;
+
     return Scaffold(
       backgroundColor: DGColors.background.normal,
       body: Stack(
         children: [
           ListView(
             children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: CachedNetworkImage(
-                  imageUrl: "https://i.pravatar.cc/3000",
-                  width: double.infinity,
-                ),
+              SizedBox(
+                width: double.infinity,
+                  child: item.profilePicUrl.isNotEmpty ? CachedNetworkImage(
+                      imageUrl: item.profilePicUrl,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget:
+                          (context, url, error) =>
+                          Image.asset("assets/images/profile_placeholder.png"),
+                    ) : Image.asset(
+                      "assets/images/profile_placeholder.png",
+                    width: double.infinity,
+                  ),
               ),
               SizedBox(height: 8),
               Padding(
@@ -39,14 +50,14 @@ class FindTieDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "박병준",
+                          item.nickname,
                           style: DGTypography.headline1Bold.copyWith(
                             color: DGColors.label.strong,
                           ),
                         ),
                         SizedBox(height: 8),
                         Text(
-                          "23살 / 부산광역시",
+                          "${item.age}살 / ${item.residence}",
                           style: DGTypography.bodyMedium.copyWith(
                             color: DGColors.label.normal,
                           ),
@@ -67,8 +78,7 @@ class FindTieDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              ...testItems.map(
-                (test) => Column(
+              Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
@@ -78,22 +88,26 @@ class FindTieDetailScreen extends StatelessWidget {
                       ),
                       child: Divider(thickness: 1, color: DGColors.line.normal),
                     ),
+                    if(item.introduce != null)
                     FindTieDetailCard(
-                      title: test,
+                        title: item.introduce!, items: []
+                    ),
+                    FindTieDetailCard(
+                      title: "프로필",
                       items: [
+                        if (item.height != null)
                         FindTieDetailItem(
-                          title: test,
-                          content: "${test}content",
+                          title: "키",
+                          content: "${item.height}cm",
                         ),
-                        FindTieDetailItem(
-                          title: test,
-                          content: "${test}content",
-                        ),
+                          FindTieDetailItem(
+                              title: "체형",
+                              content: "보통"
+                          )
                       ],
                     ),
                   ],
                 ),
-              ),
               SizedBox(height: 80),
             ],
           ),
