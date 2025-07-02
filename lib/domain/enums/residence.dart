@@ -19,5 +19,4 @@ enum Residence {
 
   const Residence({required this.alias});
   final String alias;
-
 }

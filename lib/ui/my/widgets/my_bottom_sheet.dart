@@ -1,6 +1,5 @@
 import 'package:find_friends/ui/core/themes/colors.dart';
 import 'package:find_friends/ui/core/ui/button.dart';
-import 'package:find_friends/ui/core/ui/clickable.dart';
 import 'package:find_friends/ui/core/ui/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -9,6 +8,7 @@ import '../../../domain/enums/gender.dart';
 import '../../../domain/enums/residence.dart';
 import '../../core/themes/typography.dart';
 import '../../core/ui/checkbox.dart';
+import 'package:find_friends/ui/core/ui/dg_chip.dart';
 
 enum SheetType { text, date, radio, residence }
 
@@ -22,12 +22,20 @@ class MyBottomSheet extends StatefulWidget {
 }
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  Gender? _selectedGender;
+  Residence? _selectedResidence;
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    DateTime _focusedDay = DateTime.now();
-    DateTime? _selectedDay;
-    Gender? _selectedGender;
-
     return Container(
       color: Colors.white,
       child: Center(
@@ -39,7 +47,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                 switch (widget.type) {
                   case SheetType.text:
                     return DGTextField(
-                      controller: widget.controller ?? TextEditingController(),
+                      controller: _controller,
                       hintText: "내용을 입력하세요.",
                     );
                   case SheetType.date:
@@ -78,7 +86,6 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
-                        spacing: 24,
                         children: [
                           for (var gender in Gender.values)
                             Padding(
@@ -108,32 +115,20 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     return Expanded(
                       child: SingleChildScrollView(
                         child: Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: List.generate(Residence.values.length, (i) {
-                            Residence item = Residence.values[i];
-                            return DGClickable(
-                              onPressed: () {
-
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: List.generate(
+                            Residence.values.length,
+                            (i) => DGChip(
+                              label: Residence.values[i].alias,
+                              selected: _selectedResidence == Residence.values[i],
+                              onTap: () {
+                                setState(() {
+                                  _selectedResidence = Residence.values[i];
+                                });
                               },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 6,
-                                ),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: "" == item.alias ? DGColors.primary : DGColors.label.disable),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  item.alias,
-                                  style: DGTypography.headline2Medium.copyWith(
-                                    color: "" == item.alias ? DGColors.primary : DGColors.label.disable,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
+                            ),
+                          ),
                         ),
                       ),
                     );
@@ -147,7 +142,22 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                   buttonSize: ButtonSize.large,
                   expand: true,
                   onPressed: () {
-                    Navigator.pop(context);
+                    dynamic result;
+                    switch (widget.type) {
+                      case SheetType.text:
+                        result = _controller.text;
+                        break;
+                      case SheetType.date:
+                        result = _selectedDay;
+                        break;
+                      case SheetType.radio:
+                        result = _selectedGender;
+                        break;
+                      case SheetType.residence:
+                        result = _selectedResidence;
+                        break;
+                    }
+                    Navigator.pop(context, result);
                   },
                 ),
               ),
