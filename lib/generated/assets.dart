@@ -2,16 +2,24 @@
 class Assets {
   Assets._();
 
-  static const String fontsPretendardBlack = 'assets/fonts/Pretendard-Black.ttf';
+  static const String fontsPretendardBlack =
+      'assets/fonts/Pretendard-Black.ttf';
   static const String fontsPretendardBold = 'assets/fonts/Pretendard-Bold.ttf';
-  static const String fontsPretendardExtraBold = 'assets/fonts/Pretendard-ExtraBold.ttf';
-  static const String fontsPretendardExtraLight = 'assets/fonts/Pretendard-ExtraLight.ttf';
-  static const String fontsPretendardLight = 'assets/fonts/Pretendard-Light.ttf';
-  static const String fontsPretendardMedium = 'assets/fonts/Pretendard-Medium.ttf';
-  static const String fontsPretendardRegular = 'assets/fonts/Pretendard-Regular.ttf';
-  static const String fontsPretendardSemiBold = 'assets/fonts/Pretendard-SemiBold.ttf';
+  static const String fontsPretendardExtraBold =
+      'assets/fonts/Pretendard-ExtraBold.ttf';
+  static const String fontsPretendardExtraLight =
+      'assets/fonts/Pretendard-ExtraLight.ttf';
+  static const String fontsPretendardLight =
+      'assets/fonts/Pretendard-Light.ttf';
+  static const String fontsPretendardMedium =
+      'assets/fonts/Pretendard-Medium.ttf';
+  static const String fontsPretendardRegular =
+      'assets/fonts/Pretendard-Regular.ttf';
+  static const String fontsPretendardSemiBold =
+      'assets/fonts/Pretendard-SemiBold.ttf';
   static const String fontsPretendardThin = 'assets/fonts/Pretendard-Thin.ttf';
+  static const String iconsArrowLeft = 'assets/icons/arrowLeft.svg';
   static const String iconsCheck = 'assets/icons/check.svg';
   static const String iconsPhone = 'assets/icons/phone.svg';
-
+  static const String imagesSplashScreen = 'assets/images/splash_screen.png';
 }
